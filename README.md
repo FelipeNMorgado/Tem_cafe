@@ -1,5 +1,5 @@
 <div align="center">
-<h1>Olá somos o Tem Café <img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/3d857cff-326e-4662-b5ac-9bdc9f65a857" width="20px" /><h1/> 
+<h1>Olá somos o Tem Café <img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/7ab8d32e-a3f0-4699-bab9-d04fe3617c7c" width="30px" /><h1/> 
 
 </div>
 
