@@ -1,3 +1,6 @@
+![image](https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/abd115eb-d4d2-4655-95a7-ae46a129191d)
+
+
 # Olá somos o Tem Café
 ![image](https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/546886f9-7153-441f-a0de-36faf3e085c0)
 
