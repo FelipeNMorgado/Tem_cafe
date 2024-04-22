@@ -1,7 +1,6 @@
 
 # Olá somos o Tem Café <div align="center">
-<img src="![image](https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/3d857cff-326e-4662-b5ac-9bdc9f65a857)
-" width="100px" />
+<img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/3d857cff-326e-4662-b5ac-9bdc9f65a857" width="100px" />
 </div>
 
 
