@@ -4,7 +4,7 @@
 </div>
 
 <div align="center">
-<img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/abd115eb-d4d2-4655-95a7-ae46a129191d" width="45px" />
+<img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/abd115eb-d4d2-4655-95a7-ae46a129191d" width="140px" />
 
 </div>
 
