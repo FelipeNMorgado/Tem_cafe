@@ -25,7 +25,22 @@
 ### Notion:
  + https://www.notion.so/PROJETOS-2-1a2176b135ca46af868014468f513985?pvs=4
 
+# Team👩‍👩‍👦‍👦
+ ### Anderson Gomes Romão de Miranda Valença
+ ### Breno Monteiro Rodrigues Lira
+ ### Carolina
+ ### Evelyn
+ ### Felipe Nunes Morgado
+ ### Felipe
+ ### Gabriel Ramos Correia Tabosa
+ ### João Antonio Medeiros Luz Parente
+ ### Lucas de Holanda de Barros Soares
+ ### Rafael Danzi 
+ ### Sophia
+ ### Thiago Manguinho Rodrigues de Sousa
 
+ 
+ 
 
 
  
