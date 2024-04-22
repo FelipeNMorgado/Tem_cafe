@@ -1,5 +1,9 @@
 
-# Olá somos o Tem Café ![image](https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/546886f9-7153-441f-a0de-36faf3e085c0)
+# Olá somos o Tem Café
+<div align="center">
+<img src="https://desblogada.files.wordpress.com/2021/05/kaka-cordovil-java-developer-2.gif" width="200px" />
+</div>
+
 ![image](https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/abd115eb-d4d2-4655-95a7-ae46a129191d)
 
 
