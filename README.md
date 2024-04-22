@@ -9,6 +9,11 @@
 
 # 📖Mais inforamações e documentos📖
 
+### Google Site:
+ + https://sites.google.com/cesar.school/temcafe-g6/in%C3%ADcio?authuser=0
+### Nosso Aplicativo web:
+ + temcafe.azurewebsites.net 
+
  
 
 
