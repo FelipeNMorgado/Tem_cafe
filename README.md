@@ -3,9 +3,10 @@
 
 </div>
 
+<div align="center">
+<img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/abd115eb-d4d2-4655-95a7-ae46a129191d" width="45px" />
 
-![image](https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/abd115eb-d4d2-4655-95a7-ae46a129191d)
-
+</div>
 
 ### 🧱Nosso Desafio:
  + Como melhorar a experiência de mapeamento profundo de cafeterias para entusiastas de café no Recife
