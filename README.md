@@ -12,7 +12,14 @@
 ### Google Site:
  + https://sites.google.com/cesar.school/temcafe-g6/in%C3%ADcio?authuser=0
 ### Nosso Aplicativo web:
- + https://temcafe.azurewebsites.net 
+ + https://temcafe.azurewebsites.net
+### Nosso Drive:
+ + https://drive.google.com/drive/folders/1Z3hlGBB0C6pczcIlK-2RPrLkLGib-nhVnaupmzB4O4djxSHN9wYqjVdbAie7xPn4BWB_7k9I?usp=sharing
+### Notion:
+ + https://www.notion.so/PROJETOS-2-1a2176b135ca46af868014468f513985?pvs=4
+
+
+
 
  
 
