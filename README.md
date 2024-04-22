@@ -5,7 +5,7 @@
  + Como melhorar a experiência de mapeamento profundo de cafeterias para entusiastas de café no Recife
 
 ### 💡Solução:
- +
+ + O TemCafé é uma plataforma inovadora que cria um espaço interativo para entusiastas do café e cafeterias. Permite que usuários marquem suas cafeterias favoritas, curtam e comentem em postagens, promovendo o envolvimento direto entre cafeterias e clientes. Além disso, fornece detalhes sobre grãos, métodos de preparo e ambiente, ajudando as cafeterias a contar suas histórias de forma mais completa.
 
 # 📖Mais inforamações e documentos📖
 
