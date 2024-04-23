@@ -28,15 +28,15 @@
 # Team👩‍👩‍👦‍👦
  ### Anderson Gomes Romão de Miranda Valença
  ### Breno Monteiro Rodrigues Lira
- ### Carolina
- ### Evelyn
+ ### Carolina Falcão Galvão
+ ### Evelyn Maria Sarmento de Oliveira Torres Almeida 
  ### Felipe Nunes Morgado
- ### Felipe
+ ### Felipe Carvalho de Sá Cintra Leonardo
  ### Gabriel Ramos Correia Tabosa
  ### João Antonio Medeiros Luz Parente
  ### Lucas de Holanda de Barros Soares
  ### Rafael Danzi 
- ### Sophia
+ ### Sophia Latache Uchôa Cruz
  ### Thiago Manguinho Rodrigues de Sousa
 
  
