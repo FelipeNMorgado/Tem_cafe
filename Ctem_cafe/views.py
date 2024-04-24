@@ -36,4 +36,4 @@ def cadastro(request):
         # Salve os dados no banco de dados
         cadastro.save()
 
-        return redirect('')  # Atualize isso com a URL desejada após o cadastro
+        return redirect('home')  # Atualize isso com a URL desejada após o cadastro
