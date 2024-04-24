@@ -24,6 +24,9 @@
  + https://drive.google.com/drive/folders/1Z3hlGBB0C6pczcIlK-2RPrLkLGib-nhVnaupmzB4O4djxSHN9wYqjVdbAie7xPn4BWB_7k9I?usp=sharing
 ### Notion:
  + https://www.notion.so/PROJETOS-2-1a2176b135ca46af868014468f513985?pvs=4
+### Par Programming:
+ + https://docs.google.com/document/d/1JNJjZWX-re2abIERAAeIxPRrnGnuVNt5ClwBKMpjqKc/edit#heading=h.owlmmn8nicl2 
+
 
 # Team👩‍👩‍👦‍👦
  ### Anderson Gomes Romão de Miranda Valença
