@@ -1,0 +1,29 @@
+.circle {
+    background-color: #aaa;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .circle img {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+.container-fluid  {
+    --bs-text-opacity: 1;
+    background-color: #261B11;
+  }
+.cardapio{
+    border-radius: 25%;
+    width: 250px;
+    height: 300px;
+ }
+ .cardapio img {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+
