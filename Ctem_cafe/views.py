@@ -37,3 +37,6 @@ def cadastro(request):
         cadastro.save()
 
         return redirect('home')  # Atualize isso com a URL desejada após o cadastro
+    
+def perfil(request):
+    return render(request, 'visperfil.html')
