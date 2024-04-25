@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from .models import Cadastro
 from .models import Cliente
 from .models import Favorite
+from django.contrib.auth import authenticate,login
+from django.http.response import HttpResponse
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -109,3 +111,17 @@ def favorited_coffeeshop(request):
     
     
     return redirect('perfil')
+
+
+def login(request):
+    if request.method=="GET":
+        return render(request, 'login.html')
+    else:
+        email=request.POST.get('inputEmail4')
+        senha=request.POST.get('inputPassword4')
+        vali=authenticate(email=email,senha=senha)
+        if vali:
+            login(request,vali)
+            return render(request,'index.html')
+        else:
+           return HttpResponse('Você precisa estar logado')
