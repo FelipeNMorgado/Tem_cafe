@@ -9,6 +9,7 @@
     <title>Per_Usuario</title>
 </head>
 <body>
+  {% block content %}
     <!-- ADICIONANDO BARRA DE NAVEGAÇÃO-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary mt-0 ">
         <div class="container-fluid ">
@@ -75,6 +76,26 @@
             <div class="d-flex align-items-center">
                 <p class="text-start me-3">Cafeteria: Café Café</p>
                 <div class="con-like">
+                  
+                  <form
+                    action="{% url 'favorited_coffeeshop'%}"
+                    method="POST"
+                    class="ui form"
+                  >
+                    {% csrf_token %}
+                    <input
+                      type="hidden"
+                      name="post_id"
+                      
+                    />
+                    {% if babysitter.favorited == True %}
+                    <button type="submit" class="ui button positive">❤</button>
+                    {% else %}
+                    <button type="submit" class="ui button negative">♡</button>
+                    {% endif %}
+                  </form>
+                  
+                </form>
                     <input class="like" type="checkbox" title="like">
                     <div class="checkmark">
                         <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
@@ -120,5 +141,6 @@
 
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      {% endblock content %}
 </body>
 </html>

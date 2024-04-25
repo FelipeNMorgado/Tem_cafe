@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from .models import Cadastro
 from .models import Cliente
+from .models import Favorite
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -81,4 +82,30 @@ def perfil(request):
 
 
 def menu(request):
+
+    user = request.user
+    
+    # Busca todas as instâncias de favoritos do usuário
+    favorites = Favorite.objects.filter(user_id=user.id)
+
+    is_favorited = favorites.filter(user_id = user.id).exists()
+
+    
     return render(request, 'menu.html')
+
+def favorited_coffeeshop(request):
+    user = request.user
+
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        
+        favorited = {}
+        
+        try:
+            favorited = Favorite.objects.get(user_id=user.id) 
+            Favorite.delete(favorited)
+        except:
+            Favorite.objects.create(user_id=user)
+    
+    
+    return redirect('perfil')

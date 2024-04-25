@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Cadastro(models.Model):
     email = models.EmailField()
@@ -36,4 +37,9 @@ class Cliente(models.Model):
         return self.email
     
 
+class Favorite(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    value = models.CharField(choices=[('like', 'Like'), ('unlike', 'Unlike')], max_length=10)
 
+    def str(self):
+        return f'{self.user_id}'
