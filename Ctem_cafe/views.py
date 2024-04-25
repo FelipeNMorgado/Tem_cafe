@@ -55,8 +55,6 @@ def cadastro_cliente(request):
         bairro = request.POST.get('inputNeighborhood')
         estado = request.POST.get('inputState')
         cep = request.POST.get('inputZip')
-        telefone = request.POST.get('inputPhone')
-        data_nascimento = request.POST.get('inputBirthDate')
         concordo_termos = request.POST.get('gridCheck')
 
         cliente = Cliente(
@@ -69,8 +67,6 @@ def cadastro_cliente(request):
             bairro=bairro,
             estado=estado,
             cep=cep,
-            telefone=telefone,
-            data_nascimento=data_nascimento,
             concordo_termos=concordo_termos
         )
         cliente.save()
@@ -122,6 +118,7 @@ def login(request):
         vali=authenticate(email=email,senha=senha)
         if vali:
             login(request,vali)
-            return render(request,'index.html')
+            return render(request,'menu.html')
         else:
            return HttpResponse('Você precisa estar logado')
+        

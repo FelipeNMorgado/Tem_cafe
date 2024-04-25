@@ -25,8 +25,6 @@ class Cliente(models.Model):
     bairro = models.CharField(max_length=100)
     estado = models.CharField(max_length=100)
     cep = models.CharField(max_length=10)
-    telefone = models.CharField(max_length=20)
-    data_nascimento = models.DateField()
     concordo_termos = models.BooleanField()
 
     def __str__(self):
