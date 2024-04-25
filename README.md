@@ -50,7 +50,7 @@
  ### Gabriel Ramos Correia Tabosa
  ### João Antonio Medeiros Luz Parente
  ### Lucas de Holanda de Barros Soares
- ### Rafael Danzi 
+ ### Rafael Danzi Friedheim Tenório
  ### Sophia Latache Uchôa Cruz
  ### Thiago Manguinho Rodrigues de Sousa
 
