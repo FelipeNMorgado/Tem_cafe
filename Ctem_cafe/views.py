@@ -78,5 +78,7 @@ def cadastro_cliente(request):
 def perfil(request):
     return render(request, 'visperfil.html')
 
+
+
 def menu(request):
     return render(request, 'menu.html')

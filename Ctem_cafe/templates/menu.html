@@ -57,7 +57,7 @@
 
 <!-- Use a imagem como elemento de acionamento para o popover -->
 
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvmI765kE_ZMX1YswQB_DPtkfEQ-NWp2GA7PLq7sIvMmlC_0KQOUMDSBo7B5pGjfubdFM&usqp=CAU" id="mapaImg" data-bs-toggle="popover" title="Coffebuilding" data-content="Vizualizar perfil">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvmI765kE_ZMX1YswQB_DPtkfEQ-NWp2GA7PLq7sIvMmlC_0KQOUMDSBo7B5pGjfubdFM&usqp=CAU" id="mapaImg" data-bs-toggle="popover" title="Café café" data-content="<a href = '{% url 'perfil' %}'>Vizualizar perfil</a>">
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
@@ -65,7 +65,9 @@
 
 <script>
     // Inicialize o popover para a imagem
-    var popover = new bootstrap.Popover(document.getElementById('mapaImg'));
+    var popover = new bootstrap.Popover(document.getElementById('mapaImg'), {
+        html: true
+    });
 </script>
 
 </body>
