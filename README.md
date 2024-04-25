@@ -25,7 +25,13 @@
 ### Notion:
  + https://www.notion.so/PROJETOS-2-1a2176b135ca46af868014468f513985?pvs=4
 ### Par Programming:
- + https://docs.google.com/document/d/1JNJjZWX-re2abIERAAeIxPRrnGnuVNt5ClwBKMpjqKc/edit#heading=h.owlmmn8nicl2 
+ + https://docs.google.com/document/d/1JNJjZWX-re2abIERAAeIxPRrnGnuVNt5ClwBKMpjqKc/edit#heading=h.owlmmn8nicl2
+### Diagramas de atividades:
+ + <a href ="https://drive.google.com/file/d/1zS7Y4sQA3c6BzB9e04JUwWx_eB6KFhDN/view?usp=drive_link">Digrama 1</a>
+ + <a href ="https://drive.google.com/file/d/1_ny3BA-YDYDpaOSNBf7ZHkaSLtvyjzX_/view?usp=drive_link">Digrama 2</a>
+   
+ 
+
 
 
 # Team👩‍👩‍👦‍👦
