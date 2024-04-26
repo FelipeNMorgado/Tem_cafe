@@ -39,8 +39,9 @@
  + <a href ="https://youtu.be/nBQlBrqmrVo">https://youtu.be/nBQlBrqmrVo</a>
  ### Apresetação do Site:
  + <a href ="https://youtu.be/8zm7n0H4sss">https://youtu.be/8zm7n0H4sss</a>
-
-### StoryBoard:
+ ###Jira:
+ + https://cesar-team-o5u526dd.atlassian.net/jira/software/projects/TCC/boards/3 
+ ### StoryBoard:
 <div align="center">
   <img src="https://media.discordapp.net/attachments/1232770645176094740/1233184065004503102/image.png?ex=662c2ba8&is=662ada28&hm=79b64f7003f37ce610eb708a7939a87e003e9efb8a01fee921f0fb0d551139dc&=&format=webp&quality=lossless&width=1087&height=537"width="1000px">
   <img src="https://media.discordapp.net/attachments/1232770645176094740/1233184149737832521/image.png?ex=662c2bbc&is=662ada3c&hm=366c65c955ccbed2ed7ea1761d08985fa87d7dc0dc8038d24860efd2cfeb3e1a&=&format=webp&quality=lossless&width=825&height=418" width="1000px">
