@@ -20,6 +20,12 @@
  + https://sites.google.com/cesar.school/temcafe-g6/in%C3%ADcio?authuser=0
 ### Nosso Aplicativo web:
  + https://temcafe.azurewebsites.net
+### Instruções para a Utilização do site:
+  + Ao acessar a área de login é necessario inserir o seguinte usuario e senha:
+     + Usuario: temcafe
+     + Senha: 12345
+  + Para retornar para a home deve ser inserido o linl abaixo:
+     + https://temcafe.azurewebsites.net/menu/
 ### Nosso Drive:
  + https://drive.google.com/drive/folders/1Z3hlGBB0C6pczcIlK-2RPrLkLGib-nhVnaupmzB4O4djxSHN9wYqjVdbAie7xPn4BWB_7k9I?usp=sharing
 ### Notion:
