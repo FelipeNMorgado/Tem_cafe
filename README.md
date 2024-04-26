@@ -44,7 +44,10 @@
   <img src="https://media.discordapp.net/attachments/1232770645176094740/1233184149737832521/image.png?ex=662c2bbc&is=662ada3c&hm=366c65c955ccbed2ed7ea1761d08985fa87d7dc0dc8038d24860efd2cfeb3e1a&=&format=webp&quality=lossless&width=825&height=418" width="1000px">
 </div>
 
- 
+### BugTracker:
+ <div align="center">
+  <img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/878d8b70-4e2e-4278-b541-6b9fcca75634"width="1000px">
+
 
 
 
