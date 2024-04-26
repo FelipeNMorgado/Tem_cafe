@@ -3,7 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.cadastro_cliente, name='cadastro_cliente'),  # Rota para a página inicial
+    path('', views.login,name='login'),  # Rota para a página inicial
     
     path('cadastro/', views.cadastro, name='cadastro'),
     
@@ -13,7 +13,6 @@ urlpatterns = [
     
     path('like/', views.favorited_coffeeshop, name="favorited_coffeeshop"),
     
-    path('login', views.login,name='login'),
 
 ]
 
