@@ -6,6 +6,7 @@ from .models import Favorite
 from django.contrib.auth import authenticate,login
 from django.http.response import HttpResponse
 from django.contrib.auth import login as logind
+from django.views.generic import DetailView
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -72,17 +73,14 @@ def cadastro_cliente(request):
         )
         cliente.save()
 
-        return redirect('home')
+        return redirect('login')
 
     
 def perfil(request):
     return render(request, 'visperfil.html')
 
 
-
 def menu(request):
-
-    
 
     cafeterias = []
 
@@ -102,17 +100,7 @@ def menu(request):
         'cafeterias': cafeterias
     }
 
-
-
     return render(request, 'menu.html', context)
-
-
-#  ------------------------EXEMPLO-----------------------------------
-
-
-
-
-# ------------------------EXEMPLO-----------------------------------
 
 
 
@@ -140,13 +128,12 @@ def login(request):
     if request.method=="GET":
         return render(request, 'login.html')
     else:
-        nome=request.POST.get('inputEmail4')
-        Senha=request.POST.get('inputPassword4')
-        
-        vali=authenticate(nome_completo=nome,senha=Senha)
+        name=request.POST.get('inputEmail4')
+        senha=request.POST.get('inputPassword4')
+        vali=authenticate(username=name,password=senha)
         if vali:
             logind(request,vali)
-            return render(request,'menu.html')
+            return redirect('menu')
         else:
            return HttpResponse('Você precisa estar logado')
         
