@@ -30,7 +30,7 @@
  + <a href ="https://drive.google.com/file/d/1zS7Y4sQA3c6BzB9e04JUwWx_eB6KFhDN/view?usp=drive_link">Digrama 1</a>
  + <a href ="https://drive.google.com/file/d/1_ny3BA-YDYDpaOSNBf7ZHkaSLtvyjzX_/view?usp=drive_link">Digrama 2</a>
  ### Apresetação do Lo-Fi:
- + <a href ="https://youtu.be/YhotRLroCqA">https://youtu.be/YhotRLroCqA</a>
+ + <a href ="https://youtu.be/nBQlBrqmrVo">https://youtu.be/nBQlBrqmrVo</a>
 
 ### StoryBoard:
 <div align="center">
