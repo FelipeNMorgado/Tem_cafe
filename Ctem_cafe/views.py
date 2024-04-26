@@ -5,6 +5,7 @@ from .models import Cliente
 from .models import Favorite
 from django.contrib.auth import authenticate,login
 from django.http.response import HttpResponse
+from django.contrib.auth import login as logind
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -81,15 +82,41 @@ def perfil(request):
 
 def menu(request):
 
-    user = request.user
     
-    # Busca todas as instâncias de favoritos do usuário
-    favorites = Favorite.objects.filter(user_id=user.id)
 
-    is_favorited = favorites.filter(user_id = user.id).exists()
+    cafeterias = []
 
-    
-    return render(request, 'menu.html')
+
+    for cafeterias_info in Cadastro.objects.all():
+
+        cafeterias_data = {
+            'nome_loja': cafeterias_info.nome_loja,
+            'bairro': cafeterias_info.bairro,
+            'endereco': cafeterias_info.endereco,
+            'complemento': cafeterias_info.complemento
+        }
+
+        cafeterias.append(cafeterias_data)
+
+    context = {
+        'cafeterias': cafeterias
+    }
+
+
+
+    return render(request, 'menu.html', context)
+
+
+#  ------------------------EXEMPLO-----------------------------------
+
+
+
+
+# ------------------------EXEMPLO-----------------------------------
+
+
+
+
 
 def favorited_coffeeshop(request):
     user = request.user
@@ -113,11 +140,12 @@ def login(request):
     if request.method=="GET":
         return render(request, 'login.html')
     else:
-        email=request.POST.get('inputEmail4')
-        senha=request.POST.get('inputPassword4')
-        vali=authenticate(email=email,senha=senha)
+        nome=request.POST.get('inputEmail4')
+        Senha=request.POST.get('inputPassword4')
+        
+        vali=authenticate(nome_completo=nome,senha=Senha)
         if vali:
-            login(request,vali)
+            logind(request,vali)
             return render(request,'menu.html')
         else:
            return HttpResponse('Você precisa estar logado')

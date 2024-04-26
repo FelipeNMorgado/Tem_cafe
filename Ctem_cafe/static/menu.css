@@ -24,3 +24,33 @@
     background-color: #261B11;
   }
 
+
+  .filter-container {
+    background-color: #bf895a;
+    
+    padding: 20px;
+    border-radius: 7px;
+    border-right: 1px solid #F5E0D0;
+    border-bottom: 1px solid #F5E0D0;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilização para o título dos filtros */
+h2 {
+    font-size: 26px;
+    font-family: cursive;
+
+}
+
+h1{
+    text-align: center;
+}
+
+.hr-small {
+    height: 1px;
+    border: none;
+    width: 50%;
+    margin: 10px auto; /* Centraliza horizontalmente */
+  }
+
+
