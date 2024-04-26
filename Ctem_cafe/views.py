@@ -135,5 +135,5 @@ def login(request):
             logind(request,vali)
             return redirect('menu')
         else:
-           return HttpResponse('Você precisa estar logado')
+            return redirect('menu')
         
