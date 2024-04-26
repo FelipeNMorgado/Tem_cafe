@@ -29,7 +29,15 @@
 ### Diagramas de atividades:
  + <a href ="https://drive.google.com/file/d/1zS7Y4sQA3c6BzB9e04JUwWx_eB6KFhDN/view?usp=drive_link">Digrama 1</a>
  + <a href ="https://drive.google.com/file/d/1_ny3BA-YDYDpaOSNBf7ZHkaSLtvyjzX_/view?usp=drive_link">Digrama 2</a>
-   
+ ### Apresetação do Lo-Fi:
+ + <a href ="https://youtu.be/YhotRLroCqA">https://youtu.be/YhotRLroCqA</a>
+
+### StoryBoard:
+<div align="center">
+  <img src="https://media.discordapp.net/attachments/1232770645176094740/1233184065004503102/image.png?ex=662c2ba8&is=662ada28&hm=79b64f7003f37ce610eb708a7939a87e003e9efb8a01fee921f0fb0d551139dc&=&format=webp&quality=lossless&width=1087&height=537"width="1000px">
+  <img src="https://media.discordapp.net/attachments/1232770645176094740/1233184149737832521/image.png?ex=662c2bbc&is=662ada3c&hm=366c65c955ccbed2ed7ea1761d08985fa87d7dc0dc8038d24860efd2cfeb3e1a&=&format=webp&quality=lossless&width=825&height=418" width="1000px">
+</div>
+
  
 
 
@@ -44,7 +52,7 @@
  ### Gabriel Ramos Correia Tabosa
  ### João Antonio Medeiros Luz Parente
  ### Lucas de Holanda de Barros Soares
- ### Rafael Danzi 
+ ### Rafael Danzi Friedheim Tenório
  ### Sophia Latache Uchôa Cruz
  ### Thiago Manguinho Rodrigues de Sousa
 
