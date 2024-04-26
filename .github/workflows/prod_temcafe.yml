@@ -28,11 +28,7 @@ jobs:
           source venv/bin/activate
       
       - name: Install dependencies
-        run: pip install gunicorn
-             pip install packaging
-             pip install psycopg2-binary
-             pip install python-dotenv
-             pip install whitenoise
+        run:  pip install -r SEUPROJETODJANGO/requirements.txt
 
       - name: Cleaning testing files
         run: |
