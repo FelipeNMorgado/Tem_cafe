@@ -39,7 +39,7 @@
  + <a href ="https://youtu.be/nBQlBrqmrVo">https://youtu.be/nBQlBrqmrVo</a>
  ### Apresetação do Site:
  + <a href ="https://youtu.be/8zm7n0H4sss">https://youtu.be/8zm7n0H4sss</a>
- ###Jira:
+### Jira:
  + https://cesar-team-o5u526dd.atlassian.net/jira/software/projects/TCC/boards/3 
  ### StoryBoard:
 <div align="center">
