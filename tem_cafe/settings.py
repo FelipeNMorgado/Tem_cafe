@@ -18,7 +18,7 @@ if NOT_PROD:
     DEBUG = True
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = 'django-insecure-7f(1fa6n@nq$^v$1pp8eqbyvxkl--t+-@b$d39j7-3cdc8'
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['temcafe.azurewebsites.net','127.0.0.1']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -28,6 +28,21 @@ if NOT_PROD:
 else:
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
+
+    if ALLOWED_HOSTS is not None:
+        ALLOWED_HOSTS = ALLOWED_HOSTS.split(' ')
+    else:
+        # Lida com o caso em que a variável de ambiente não está definida
+        ALLOWED_HOSTS = ['temcafe.azurewebsites.net','127.0.0.1']
+
+    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS')
+
+    if CSRF_TRUSTED_ORIGINS is not None:
+        CSRF_TRUSTED_ORIGINS = CSRF_TRUSTED_ORIGINS.split(' ')
+    else:
+        CSRF_TRUSTED_ORIGINS = []
+
     SECURE_SSL_REDIRECT = \
         os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
 
