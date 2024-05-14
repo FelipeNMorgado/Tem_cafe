@@ -8,6 +8,7 @@ from django.http.response import HttpResponse
 from django.contrib.auth import login as logind
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -86,7 +87,7 @@ def perfil(request, nome_cafeteria):
         nota = int(request.POST.get('rate'))  # Supondo que 'rate' seja o nome do campo do formulário para a avaliação
         Avaliacao3.objects.create(avaliador=avaliador, avaliado=avaliado, nota=nota, user=request.user)
         # Redirecionar de volta para o perfil da cafeteria após processar a avaliação
-        return redirect('perfil', nome_cafeteria=nome_cafeteria)
+        return JsonResponse({'status': 'success'})
     else:
         # Se for uma solicitação GET, apenas renderizar o perfil da cafeteria
         cafeteria = Cadastro.objects.get(nome_loja=nome_cafeteria)
