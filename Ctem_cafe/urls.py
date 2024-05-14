@@ -7,7 +7,7 @@ urlpatterns = [
     
     path('cadastro/', views.cadastro, name='cadastro'),
     
-    path('perfil/', views.perfil, name='perfil'),
+    path('perfil/<str:nome_cafeteria>/', views.perfil, name='perfil'),
     
     path('menu/', views.menu, name='menu'),
     

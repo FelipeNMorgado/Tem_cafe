@@ -9,7 +9,6 @@
     <title>Per_Usuario</title>
 </head>
 
-
 <body>
   {% block content %}
     <!-- ADICIONANDO BARRA DE NAVEGAÇÃO-->
@@ -117,7 +116,7 @@
             <div class="formulario">
               <form id="avaliacaoForm" method="post">
                   {% csrf_token %}
-                  
+                  <input type="hidden" name="avaliado" value="{{ cafeteria.nome_loja }}">
                   <div class="rating">
                       <input type='radio' hidden name='rate' id='rating_5' data-idx='0' value='5'>	
                       <label for='rating_5'></label>
@@ -156,4 +155,6 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
       {% endblock content %}
 </body>
+
+
 </html>

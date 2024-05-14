@@ -1,12 +1,13 @@
 
 from django.shortcuts import render, redirect
-from .models import Cadastro
+from .models import Cadastro, Avaliacao3
 from .models import Cliente
 from .models import Favorite
 from django.contrib.auth import authenticate,login
 from django.http.response import HttpResponse
 from django.contrib.auth import login as logind
 from django.views.generic import DetailView
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -76,8 +77,20 @@ def cadastro_cliente(request):
         return redirect('login')
 
     
-def perfil(request):
-    return render(request, 'visperfil.html')
+@login_required
+def perfil(request, nome_cafeteria):
+    if request.method == 'POST':
+        # Se for uma solicitação POST, processar a avaliação
+        avaliador = request.user.username
+        avaliado = nome_cafeteria
+        nota = int(request.POST.get('rate'))  # Supondo que 'rate' seja o nome do campo do formulário para a avaliação
+        Avaliacao3.objects.create(avaliador=avaliador, avaliado=avaliado, nota=nota, user=request.user)
+        # Redirecionar de volta para o perfil da cafeteria após processar a avaliação
+        return redirect('perfil', nome_cafeteria=nome_cafeteria)
+    else:
+        # Se for uma solicitação GET, apenas renderizar o perfil da cafeteria
+        cafeteria = Cadastro.objects.get(nome_loja=nome_cafeteria)
+        return render(request, 'visperfil.html', {'cafeteria': cafeteria})
 
 
 def menu(request):
