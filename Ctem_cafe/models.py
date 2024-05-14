@@ -41,3 +41,10 @@ class Favorite(models.Model):
 
     def str(self):
         return f'{self.user_id}'
+
+
+class Avaliacao3(models.Model):
+    avaliador = models.CharField(max_length=150)  # Campo para armazenar o nome do usuário que fez a avaliação
+    avaliado = models.CharField(max_length=100)
+    nota = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

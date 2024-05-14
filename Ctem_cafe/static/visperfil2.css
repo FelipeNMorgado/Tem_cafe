@@ -1,0 +1,275 @@
+.circle {
+    background-color: #aaa;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .circle img {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+.container-fluid  {
+    --bs-text-opacity: 1;
+    background-color: #261B11;
+  }
+.cardapio{
+    border-radius: 25%;
+    width: 250px;
+    height: 300px;
+ }
+ .cardapio img {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .con-like {
+    --red: rgb(255, 50, 50);
+    position: relative;
+    width: 40px;
+    height: 40px;
+    top: -5px;
+    margin-left: 5%;
+  }
+  
+  .con-like .like {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 20;
+    cursor: pointer;
+  }
+  
+  .con-like .checkmark {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .con-like .outline,
+  .con-like .filled {
+    fill: var(--red);
+    position: absolute;
+  }
+  
+  .con-like .filled {
+    animation: kfr-filled 0.5s;
+    display: none;
+  }
+  
+  .con-like .celebrate {
+    position: absolute;
+    animation: kfr-celebrate 0.5s;
+    animation-fill-mode: forwards;
+    display: none;
+  }
+  
+  .con-like .poly {
+    stroke: var(--red);
+    fill: var(--red);
+  }
+  
+  .con-like .like:checked ~ .checkmark .filled {
+    display: block
+  }
+  
+  .con-like .like:checked ~ .checkmark .celebrate {
+    display: block
+  }
+  
+  @keyframes kfr-filled {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+  
+  @keyframes kfr-celebrate {
+    0% {
+      transform: scale(0);
+    }
+  
+    50% {
+      opacity: 0.8;
+    }
+  
+    100% {
+      transform: scale(1.2);
+      opacity: 0;
+      display: none;
+    }
+  }
+
+  /* Css estrela */
+
+  .rating {
+    display: inline-block;
+    font-size: 0;
+    position: relative;
+    text-transform: capitalize;
+    padding-right: 5%;
+    color: orange;
+
+  }
+  
+  .rating label {
+    display: inline-block;
+    float: right;
+    padding: 0;
+    font-size: 50px;
+    cursor: pointer;
+  }
+  
+  .rating label::before {
+    content: "\2606";
+    display: inline-block;
+    transition: 0.2s;
+  }
+  
+  .rating label span {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    height: 20px;
+    font-size: 1rem;
+    white-space: nowrap;
+    transition: 0.15s ease-out;
+    pointer-events: none;
+    letter-spacing: -2px;
+    transform: translateY(-50%);
+  }
+  
+  .rating label:hover span {
+    opacity: 1;
+    transform: none;
+    letter-spacing: 0;
+  }
+  
+  .rating label:hover::before {
+    color: orange;
+    opacity: 0.6;
+    filter: drop-shadow(0 0 4px);
+  }
+  
+  .rating label:hover ~ *::before {
+    color: orange;
+    opacity: 0.6;
+    filter: drop-shadow(0 0 4px);
+  }
+  
+  .rating input:checked ~ label::before {
+    content: "\2605";
+    color: orange;
+    filter: drop-shadow(0 0 4px);
+    transform: rotate(0.2turn);
+    transition-delay: calc(0.1 * attr(data-idx integer));
+  }
+  
+  .avaliacoes {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: sans-serif;
+  }
+  
+  .avaliacoes h2 {
+    margin-bottom: 10px;
+    font-family: sans-serif;
+  }
+  
+  .avaliacoes .avaliacao-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    list-style-type: none;
+  }
+  
+  .avaliacoes .avaliacao-rating {
+    color: orange;
+    opacity: 0.6;
+    filter: drop-shadow(0 0 4px);
+  }
+  
+  .avaliacoes .avaliacao-rating .avaliacao-estrelas {
+    display: inline-block;
+    font-size: 24px;
+  }
+  
+  .avaliacoes .avaliacao-rating .avaliacao-estrela {
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
+  .avaliacoes .avaliacao-rating .avaliacao-estrela::before {
+    content: "\2606";
+  }
+  
+  .avaliacoes .avaliacao-rating .avaliacao-cheia {
+    color: orange;
+  }
+  
+  .wrapper {
+    padding-left: 35%;
+  }
+  
+  .enviar-avaliacao {
+    display: block;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    font-family: sans-serif;
+    text-decoration: none;
+    color: #333;
+    border: 2px solid #333;
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    transition: all .35s;
+  }
+  
+  .enviar-avaliacao span {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .enviar-avaliacao:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: green;
+    transition: all .35s;
+  }
+  
+  .enviar-avaliacao:hover {
+    color: #fff;
+  }
+  
+  .enviar-avaliacao:hover:after {
+    width: 100%;
+  }
+  
+  .avaliacoes-lista {
+    list-style-type: disc;
+    color: black;
+  }
