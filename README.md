@@ -47,8 +47,11 @@
  + https://drive.google.com/drive/folders/1Z3hlGBB0C6pczcIlK-2RPrLkLGib-nhVnaupmzB4O4djxSHN9wYqjVdbAie7xPn4BWB_7k9I?usp=sharing
 ### Notion:
  + https://www.notion.so/PROJETOS-2-1a2176b135ca46af868014468f513985?pvs=4
-### Par Programming:
- + https://docs.google.com/document/d/1JNJjZWX-re2abIERAAeIxPRrnGnuVNt5ClwBKMpjqKc/edit#heading=h.owlmmn8nicl2
+<details>
+<summary><h1>Sr1</h1></summary>
+
+ ### Pair Programming:
+ + <a href="https://docs.google.com/document/d/1JNJjZWX-re2abIERAAeIxPRrnGnuVNt5ClwBKMpjqKc/edit#heading=h.owlmmn8nicl2">Relatorio</a>
 <details>
 <summary><h3>Diagramas de atividades:</h3></summary>
  <ul>
@@ -57,7 +60,7 @@
   </ul>
 </details>
 
-### Apresentação Lo-Fi:
+ ### Apresentação Lo-Fi:
  + <a href ="https://youtu.be/nBQlBrqmrVo">https://youtu.be/nBQlBrqmrVo</a>
 
  ### Apresetação do Site:
@@ -75,7 +78,7 @@
 ### BugTracker:
  <div align="center">
   <img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/878d8b70-4e2e-4278-b541-6b9fcca75634"width="1000px">
-
+</details>
 
 
 
