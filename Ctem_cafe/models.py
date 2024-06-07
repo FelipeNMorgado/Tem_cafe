@@ -35,14 +35,6 @@ class Cliente(models.Model):
         return self.email
     
 
-class Favorite(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    value = models.CharField(choices=[('like', 'Like'), ('unlike', 'Unlike')], max_length=10)
-
-    def str(self):
-        return f'{self.user_id}'
-
-
 class Avaliacao3(models.Model):
     avaliador = models.CharField(max_length=150)  # Campo para armazenar o nome do usuário que fez a avaliação
     avaliado = models.CharField(max_length=100)
@@ -55,3 +47,11 @@ class TagCafeteria2(models.Model):
 
     def __str__(self):
         return f'{self.user_id.username} - {self.tag_name}'
+    
+
+class Favorite3(models.Model):
+    usuario = models.CharField(max_length=150)  # Campo para armazenar o nome do usuário que fez a avaliação
+    cafeteria = models.CharField(max_length=100)
+    value = models.CharField(choices=[('like', 'Like'), ('unlike', 'Unlike')], max_length=10)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+

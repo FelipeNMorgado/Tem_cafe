@@ -1,6 +1,6 @@
 import json
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cadastro, Avaliacao3, Cliente, Favorite, TagCafeteria2
+from .models import Cadastro, Avaliacao3, Cliente, Favorite3, TagCafeteria2
 from django.contrib.auth import authenticate, login as logind
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
@@ -70,7 +70,8 @@ def perfil(request, nome_cafeteria):
     else:
         cafeteria = get_object_or_404(Cadastro, nome_loja=nome_cafeteria)
         tags = TagCafeteria2.objects.filter(user_id=request.user)
-        return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags})
+        favorited = Favorite3.objects.filter(usuario=request.user.username, cafeteria=nome_cafeteria, user_id=request.user).exists()
+        return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags, 'favorited': favorited})
 
 @login_required
 @csrf_exempt
@@ -85,22 +86,6 @@ def add_tag(request):
         return JsonResponse({'success': False, 'message': 'Invalid tag name'})
     return JsonResponse({'success': False, 'message': 'Invalid request'})
 
-@login_required
-@csrf_exempt
-def favorited_coffeeshop(request):
-    if request.method == 'POST':
-        post_id = request.POST.get('post_id')
-        user = request.user
-        cafeteria = get_object_or_404(Cadastro, id=post_id)
-
-        try:
-            favorite = Favorite.objects.get(user=user, cafeteria=cafeteria)
-            favorite.delete()
-            return JsonResponse({'success': True, 'favorited': False})
-        except Favorite.DoesNotExist:
-            Favorite.objects.create(user=user, cafeteria=cafeteria, value='like')
-            return JsonResponse({'success': True, 'favorited': True})
-    return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 def menu(request):
     cafeterias = Cadastro.objects.all()
@@ -119,3 +104,23 @@ def login(request):
             return redirect('menu')
         else:
             return HttpResponse('Você precisa estar logado')
+
+
+@login_required
+def favorited_coffeeshop(request):
+    if request.method == "POST":
+        cafeteria_name = request.POST.get('post_id')
+        user = request.user
+
+        try:
+            favorited = Favorite3.objects.get(usuario=user.username, cafeteria=cafeteria_name, user_id=user)
+            favorited.delete()
+        except Favorite3.DoesNotExist:
+            Favorite3.objects.create(usuario=user.username, cafeteria=cafeteria_name, user_id=user)
+
+        return redirect('perfil', nome_cafeteria=cafeteria_name)
+
+    return redirect('menu')
+    
+
+

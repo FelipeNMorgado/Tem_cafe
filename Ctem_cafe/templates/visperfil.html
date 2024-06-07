@@ -70,15 +70,17 @@
             <div class="d-flex align-items-center">
               <p class="text-start me-3">Cafeteria: {{ cafeteria.nome_loja }}</p>
               <div class="con-like">
-                <form action="{% url 'favorited_coffeeshop' %}" method="POST" class="ui form">
-                  {% csrf_token %}
-                  <input type="hidden" name="post_id" value="{{ cafeteria.id }}">
-                  {% if cafeteria.favorited %}
-                    <button type="submit" class="ui button positive">❤</button>
-                  {% else %}
-                    <button type="submit" class="ui button negative">♡</button>
-                  {% endif %}
-                </form>
+                
+                  <form action="{% url 'favorited_coffeeshop' %}" method="POST" class="ui form">
+                      {% csrf_token %}
+                      <input type="hidden" name="post_id" value="{{ cafeteria.nome_loja }}">
+                      {% if favorited %}
+                          <button type="submit" class="ui button positive">❤</button>
+                      {% else %}
+                          <button type="submit" class="ui button negative">♡</button>
+                      {% endif %}
+                  </form>
+
               </div>
             </div>
             
