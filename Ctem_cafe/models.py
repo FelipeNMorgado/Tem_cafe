@@ -48,3 +48,10 @@ class Avaliacao3(models.Model):
     avaliado = models.CharField(max_length=100)
     nota = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class TagCafeteria2(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    tag_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.user_id.username} - {self.tag_name}'

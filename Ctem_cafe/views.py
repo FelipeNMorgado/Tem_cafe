@@ -1,4 +1,5 @@
 
+import json
 from django.shortcuts import render, redirect
 from .models import Cadastro, Avaliacao3
 from .models import Cliente
@@ -10,6 +11,8 @@ from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+from .models import TagCafeteria2
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -166,4 +169,17 @@ def login(request):
             return redirect('menu')
         else:
            return HttpResponse('Você precisa estar logado')
-        
+
+def AdicionandoTag(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        tag_name = data.get('tag')
+
+        # Aqui você pode personalizar o salvamento para associar ao usuário logado
+        # e a cafeteria específica, se necessário
+        user = request.user
+        tag_name = TagCafeteria2.objects.create(user_id=user, tag_name=tag_name)
+
+        return JsonResponse({'success': True})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})

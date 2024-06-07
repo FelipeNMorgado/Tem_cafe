@@ -107,8 +107,81 @@
             <hr>
             <p class="text-start ">Tags</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button class="btn btn-primary me-md-2" type="button">Button</button>
-                <button class="btn btn-primary" type="button">Button</button>
+                <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Adicionar +
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Nova Tag:</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="col-md-4">
+                        <label for="inputState" class="form-label fs-5">Opções:</label>
+                        <select id="inputState" class="form-select" name="inputState">
+                          <option selected>Escolha...</option>
+                          <option>Trabalho</option>
+                          <option>Estudo</option>
+                          <option>Business</option>
+                          <option>Pet Friendly</option>
+                          <option>Café Arábica</option>
+                          <option>Café Catuaí</option>
+                          <option>Café Robusta</option>
+                          <option>Café Geisha</option>
+                          <option>Café Kona</option>
+                        </select>
+                        <button type="button" class="btn btn-primary mt-3" id="saveTagButton">Salvar</button>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                        <!-- Adicione o token CSRF necessário para o Django -->
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+            <script>
+              document.getElementById('saveTagButton').addEventListener('click', function() {
+                const selectedTag = document.getElementById('inputState').value;
+
+                if (selectedTag === "Escolha...") {
+                  alert("Por favor, selecione uma tag.");
+                  return;
+                }
+
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch('/add_tag/', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                  },
+                  body: JSON.stringify({
+                    tag: selectedTag
+                  })
+                })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    alert("Tag adicionada com sucesso!");
+                    location.reload(); // recarrega a página para mostrar a tag adicionada
+                  } else {
+                    alert("Houve um erro ao adicionar a tag.");
+                  }
+                });
+              });
+            </script>
+
+
             </div>
             <hr>
             <p class="text-start ">Avaliação</p>
