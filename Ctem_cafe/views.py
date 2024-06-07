@@ -9,6 +9,7 @@ from django.contrib.auth import login as logind
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -46,7 +47,7 @@ def cadastro(request):
 
         return redirect('home')  # Atualize isso com a URL desejada após o cadastro
     
-def cadastro_cliente(request):
+'''def cadastro_cliente(request):
     if request.method == "GET":
         return render(request, 'cadastro_cliente.html')
     elif request.method == "POST":
@@ -74,6 +75,24 @@ def cadastro_cliente(request):
             concordo_termos=concordo_termos
         )
         cliente.save()
+
+        return redirect('login')'''
+    
+def cadastro_cliente(request):
+    if request.method == "GET":
+        return render(request,'cadastro_cliente.html')
+    elif request.method == "POST":
+        nome = request.POST.get('inputFullName')
+        email = request.POST.get('inputEmail4')
+        senha = request.POST.get('inputPassword4')
+        
+        user = User.objects.filter(email=email).first()
+        
+        if user:
+            return HttpResponse("essse email e esse nome já estão cadastrados")
+        
+        user = User.objects.create_user(username=nome,email=email,password=senha)
+        user.save()
 
         return redirect('login')
 
@@ -115,9 +134,6 @@ def menu(request):
     }
 
     return render(request, 'menu.html', context)
-
-
-
 
 
 def favorited_coffeeshop(request):
