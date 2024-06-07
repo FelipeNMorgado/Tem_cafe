@@ -1,20 +1,20 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href={% static "visperfil2.css" %}>
+    <link rel="stylesheet" href="{% static 'visperfil2.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Per_Usuario</title>
+    <title>Perfil Usuário</title>
 </head>
 
 <body>
   {% block content %}
     <!-- ADICIONANDO BARRA DE NAVEGAÇÃO-->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary mt-0 ">
-        <div class="container-fluid ">
-          <a class="navbar-brand " href="#"><img src="Logo.png" class="w-25 p-3" ></a>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary mt-0">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><img src="{% static 'Logo.png' %}" class="w-25 p-3"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -27,12 +27,12 @@
                 <a class="nav-link" style="color: burlywood;" href="#">Link</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" style="color: burlywood;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true" >
+                <a class="nav-link dropdown-toggle" style="color: burlywood;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                   Dropdown
                 </a>
                 <ul class="dropdown-menu" style="background-color: burlywood;">
-                  <li><a class="dropdown-item" style="color: #261B11;"href="#">Action </a></li>
-                  <li><a class="dropdown-item"  style="color: #261B11;"href="#">Another action</a></li>
+                  <li><a class="dropdown-item" style="color: #261B11;" href="#">Action</a></li>
+                  <li><a class="dropdown-item" style="color: #261B11;" href="#">Another action</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" style="color: #261B11;" href="#">Something else here</a></li>
                 </ul>
@@ -50,64 +50,45 @@
       </nav>
     
       <div class="container text-center fs-2">
-    
-    
-        <div class="row align-items-start ">
+        <div class="row align-items-start">
           <div class="col border">
             <br>
             <div class="circle">
                 <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/7407996-user-icon-person-icon-client-symbol-login-head-sign-icon-design-vetor.jpg">
             </div>
-            <br>
-            <br>
+            <br><br>
 
-            <p class="text-start te position-relative width:100px">Cardapio:</p>
+            <p class="text-start te position-relative width:100px">Cardápio:</p>
             
-            <div class ="cardapio">
+            <div class="cardapio">
                 <img src="https://marketplace.canva.com/EAE3yDrBBVU/1/0/1131w/canva-card%C3%A1pio-de-caf%C3%A9s-para-cafeteria-moderno-marrom-AmpHQUqP6mg.jpg">
             </div>
-            <br>
-            <br>
-
-
-
+            <br><br>
           </div>
           
-          <div class="col border ">
+          <div class="col border">
             <div class="d-flex align-items-center">
               <p class="text-start me-3">Cafeteria: {{ cafeteria.nome_loja }}</p>
-                <div class="con-like">
-                  
-                  <form
-                    action="{% url 'favorited_coffeeshop'%}"
-                    method="POST"
-                    class="ui form"
-                  >
-                    {% csrf_token %}
-                    <input
-                      type="hidden"
-                      name="post_id"
-                      
-                    />
-                    {% if coffeshop.favorited == True %}
+              <div class="con-like">
+                <form action="{% url 'favorited_coffeeshop' %}" method="POST" class="ui form">
+                  {% csrf_token %}
+                  <input type="hidden" name="post_id" value="{{ cafeteria.id }}">
+                  {% if cafeteria.favorited %}
                     <button type="submit" class="ui button positive">❤</button>
-                    {% else %}
+                  {% else %}
                     <button type="submit" class="ui button negative">♡</button>
-                    {% endif %}
-                  </form>
-                  
+                  {% endif %}
                 </form>
-                  
-                </div>
+              </div>
             </div>
             
             <hr>
-            <p class="text-start ">Historia</p>
-            <p class="text-start fs-6">A cafeteria é muiuto massaaa aaaaa legal </p>
+            <p class="text-start">História</p>
+            <p class="text-start fs-6">{{ cafeteria.historia }}</p>
             <hr>
-            <p class="text-start ">Tags</p>
+            <p class="text-start">Tags</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <!-- Button trigger modal -->
+              <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Adicionar +
               </button>
@@ -145,144 +126,131 @@
                 </div>
               </div>
 
-                        <!-- Adicione o token CSRF necessário para o Django -->
-            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+              <!-- Adicione o token CSRF necessário para o Django -->
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
-            <script>
-              document.getElementById('saveTagButton').addEventListener('click', function() {
-                const selectedTag = document.getElementById('inputState').value;
+              <script>
+                document.getElementById('saveTagButton').addEventListener('click', function() {
+                  const selectedTag = document.getElementById('inputState').value;
 
-                if (selectedTag === "Escolha...") {
-                  alert("Por favor, selecione uma tag.");
-                  return;
-                }
-
-                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-                fetch('/add_tag/', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                  },
-                  body: JSON.stringify({
-                    tag: selectedTag
-                  })
-                })
-                .then(response => response.json())
-                .then(data => {
-                  if (data.success) {
-                    alert("Tag adicionada com sucesso!");
-                    location.reload(); // recarrega a página para mostrar a tag adicionada
-                  } else {
-                    alert("Houve um erro ao adicionar a tag.");
+                  if (selectedTag === "Escolha...") {
+                    alert("Por favor, selecione uma tag.");
+                    return;
                   }
+
+                  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                  fetch("{% url 'add_tag' %}", {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({
+                      tag: selectedTag
+                    })
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.success) {
+                      alert("Tag adicionada com sucesso!");
+                      location.reload(); // recarrega a página para mostrar a tag adicionada
+                    } else {
+                      alert("Houve um erro ao adicionar a tag.");
+                    }
+                  });
                 });
-              });
-            </script>
-
-
+              </script>
             </div>
             <hr>
-            <p class="text-start ">Avaliação</p>
-            
+            <p class="text-start">Avaliação</p>
             <div class="formulario">
               <form id="avaliacaoForm" method="post">
-                  {% csrf_token %}
-                  <input type="hidden" name="avaliado" value="{{ cafeteria.nome_loja }}">
-                  <div class="rating">
-                      <input type='radio' hidden name='rate' id='rating_5' data-idx='0' value='5'>	
-                      <label for='rating_5'></label>
-                  
-                      <input type='radio' hidden name='rate' id='rating_4' data-idx='1' value='4'>
-                      <label for='rating_4'></label>
-                  
-                      <input type='radio' hidden name='rate' id='rating_3' data-idx='2' value='3'>
-                      <label for='rating_3'></label>
-                  
-                      <input type='radio' hidden name='rate' id='rating_2' data-idx='3' value='2'>
-                      <label for='rating_2'></label>
-                  
-                      <input type='radio' hidden name='rate' id='rating_1' data-idx='4' value='1' required>
-                      <label for='rating_1'></label>
-                  </div>
-          
-                  <div class="wrapper">
-                      <button href="#" class="enviar-avaliacao" type="submit"><span>Enviar</span></button>
-                  </div>
+                {% csrf_token %}
+                <input type="hidden" name="avaliado" value="{{ cafeteria.nome_loja }}">
+                <div class="rating">
+                  <input type='radio' hidden name='rate' id='rating_5' value='5'>
+                  <label for='rating_5'></label>
+                  <input type='radio' hidden name='rate' id='rating_4' value='4'>
+                  <label for='rating_4'></label>
+                  <input type='radio' hidden name='rate' id='rating_3' value='3'>
+                  <label for='rating_3'></label>
+                  <input type='radio' hidden name='rate' id='rating_2' value='2'>
+                  <label for='rating_2'></label>
+                  <input type='radio' hidden name='rate' id='rating_1' value='1' required>
+                  <label for='rating_1'></label>
+                </div>
+                <div class="wrapper">
+                  <button class="enviar-avaliacao" type="submit"><span>Enviar</span></button>
+                </div>
               </form>
               <div id="erroMessage" style="display: none; color: red;"></div>
-          </div>
+            </div>
 
-          <div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 128, 0, 0.7); color: #fff; padding: 20px; border-radius: 5px; z-index: 9999;">
-            Avaliação enviada com sucesso!
-        </div>
+            <div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 128, 0, 0.7); color: #fff; padding: 20px; border-radius: 5px; z-index: 9999;">
+              Avaliação enviada com sucesso!
+            </div>
         
-          <script>
-            document.getElementById("avaliacaoForm").addEventListener('submit', function(event) {
+            <script>
+              document.getElementById("avaliacaoForm").addEventListener('submit', function(event) {
                 event.preventDefault(); // Impede o envio do formulário padrão
                 enviarAvaliacao(); // Função para enviar a avaliação via AJAX
-            });
-        
-            function enviarAvaliacao() {
+              });
+
+              function enviarAvaliacao() {
                 var formData = new FormData(document.getElementById("avaliacaoForm")); // Obtém os dados do formulário
-        
-                // Envia os dados via AJAX usando Fetch API
+
                 fetch("{% url 'perfil' nome_cafeteria=cafeteria.nome_loja %}", {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value // Adiciona o token CSRF no cabeçalho
-                    }
+                  method: "POST",
+                  body: JSON.stringify({
+                    rate: formData.get('rate'),
+                    avaliado: formData.get('avaliado')
+                  }),
+                  headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value
+                  }
                 })
                 .then(response => {
-                    if (response.ok) {
-                        return response.json(); // Retorna a resposta como JSON se for bem-sucedida
-                    } else {
-                        throw new Error("Erro ao enviar avaliação"); // Lança um erro se a resposta não for bem-sucedida
-                    }
+                  if (response.ok) {
+                    return response.json(); // Retorna a resposta como JSON se for bem-sucedida
+                  } else {
+                    throw new Error("Erro ao enviar avaliação"); // Lança um erro se a resposta não for bem-sucedida
+                  }
                 })
                 .then(data => {
-                    if (data.status === "success") {
-                        // Exibe o pop-up de sucesso
-                        mostrarPopup("Avaliação enviada com sucesso!", "popup");
-                        document.getElementById("avaliado").value = ""; // Limpa o campo de texto 'avaliado'
-                        document.getElementById("rating_1").checked = false; // Desmarca a opção de avaliação
-                    } else {
-                        // Exibe um pop-up de erro informando que o usuário não foi encontrado
-                        mostrarPopup("Usuário não encontrado", "erroPopup");
-                    }
+                  if (data.status === "success") {
+                    mostrarPopup("Avaliação enviada com sucesso!", "popup");
+                    document.getElementById("avaliado").value = ""; // Limpa o campo de texto 'avaliado'
+                    document.getElementById("rating_1").checked = false; // Desmarca a opção de avaliação
+                  } else {
+                    mostrarPopup("Usuário não encontrado", "erroPopup");
+                  }
                 })
                 .catch(error => {
-                    console.error('Erro:', error); // Exibe o erro no console
-                    mostrarPopup("Erro ao enviar avaliação. Por favor, tente novamente.", "erroPopup"); // Exibe mensagem de erro genérica
+                  console.error('Erro:', error); // Exibe o erro no console
+                  mostrarPopup("Erro ao enviar avaliação. Por favor, tente novamente.", "erroPopup"); // Exibe mensagem de erro genérica
                 });
-            }
-        
-            function mostrarPopup(mensagem, idPopup) {
+              }
+
+              function mostrarPopup(mensagem, idPopup) {
                 var popup = document.getElementById(idPopup);
                 popup.innerText = mensagem;
                 popup.style.display = "block";
                 setTimeout(function() {
-                    popup.style.display = "none";
+                  popup.style.display = "none";
                 }, 1000); // Oculta o pop-up após 1 segundo
-            }
-        </script>
-
+              }
+            </script>
             <hr>
-            <p class="text-start ">Endereço</p>
-            <p class="text-start fs-6">Rua papai 123</p>
-
-            <img src=" https://tm.ibxk.com.br/2021/12/20/20095730932072.jpg?ims=1200x675" class="w-75 p-3" >
-
+            <p class="text-start">Endereço</p>
+            <p class="text-start fs-6">{{ cafeteria.endereco }}</p>
+            <img src="https://tm.ibxk.com.br/2021/12/20/20095730932072.jpg?ims=1200x675" class="w-75 p-3">
           </div>
         </div>
       </div>
 
-
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-      {% endblock content %}
+  {% endblock content %}
 </body>
-
-
 </html>
