@@ -163,85 +163,92 @@
               </script>
             </div>
             <hr>
-            <p class="text-start">Avaliação</p>
+            <p class="text-start ">Avaliação</p>
+            
             <div class="formulario">
               <form id="avaliacaoForm" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="avaliado" value="{{ cafeteria.nome_loja }}">
-                <div class="rating">
-                  <input type='radio' hidden name='rate' id='rating_5' value='5'>
-                  <label for='rating_5'></label>
-                  <input type='radio' hidden name='rate' id='rating_4' value='4'>
-                  <label for='rating_4'></label>
-                  <input type='radio' hidden name='rate' id='rating_3' value='3'>
-                  <label for='rating_3'></label>
-                  <input type='radio' hidden name='rate' id='rating_2' value='2'>
-                  <label for='rating_2'></label>
-                  <input type='radio' hidden name='rate' id='rating_1' value='1' required>
-                  <label for='rating_1'></label>
-                </div>
-                <div class="wrapper">
-                  <button class="enviar-avaliacao" type="submit"><span>Enviar</span></button>
-                </div>
+                  {% csrf_token %}
+                  <input type="hidden" name="avaliado" value="{{ cafeteria.nome_loja }}">
+                  <div class="rating">
+                      <input type='radio' hidden name='rate' id='rating_5' data-idx='0' value='5'>	
+                      <label for='rating_5'></label>
+                  
+                      <input type='radio' hidden name='rate' id='rating_4' data-idx='1' value='4'>
+                      <label for='rating_4'></label>
+                  
+                      <input type='radio' hidden name='rate' id='rating_3' data-idx='2' value='3'>
+                      <label for='rating_3'></label>
+                  
+                      <input type='radio' hidden name='rate' id='rating_2' data-idx='3' value='2'>
+                      <label for='rating_2'></label>
+                  
+                      <input type='radio' hidden name='rate' id='rating_1' data-idx='4' value='1' required>
+                      <label for='rating_1'></label>
+                  </div>
+          
+                  <div class="wrapper">
+                      <button href="#" class="enviar-avaliacao" type="submit"><span>Enviar</span></button>
+                  </div>
               </form>
               <div id="erroMessage" style="display: none; color: red;"></div>
-            </div>
+          </div>
 
-            <div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 128, 0, 0.7); color: #fff; padding: 20px; border-radius: 5px; z-index: 9999;">
-              Avaliação enviada com sucesso!
-            </div>
+          <div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 128, 0, 0.7); color: #fff; padding: 20px; border-radius: 5px; z-index: 9999;">
+            Avaliação enviada com sucesso!
+        </div>
         
-            <script>
-              document.getElementById("avaliacaoForm").addEventListener('submit', function(event) {
+          <script>
+            document.getElementById("avaliacaoForm").addEventListener('submit', function(event) {
                 event.preventDefault(); // Impede o envio do formulário padrão
                 enviarAvaliacao(); // Função para enviar a avaliação via AJAX
-              });
-
-              function enviarAvaliacao() {
+            });
+        
+            function enviarAvaliacao() {
                 var formData = new FormData(document.getElementById("avaliacaoForm")); // Obtém os dados do formulário
-
+        
+                // Envia os dados via AJAX usando Fetch API
                 fetch("{% url 'perfil' nome_cafeteria=cafeteria.nome_loja %}", {
-                  method: "POST",
-                  body: JSON.stringify({
-                    rate: formData.get('rate'),
-                    avaliado: formData.get('avaliado')
-                  }),
-                  headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value
-                  }
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value // Adiciona o token CSRF no cabeçalho
+                    }
                 })
                 .then(response => {
-                  if (response.ok) {
-                    return response.json(); // Retorna a resposta como JSON se for bem-sucedida
-                  } else {
-                    throw new Error("Erro ao enviar avaliação"); // Lança um erro se a resposta não for bem-sucedida
-                  }
+                    if (response.ok) {
+                        return response.json(); // Retorna a resposta como JSON se for bem-sucedida
+                    } else {
+                        throw new Error("Erro ao enviar avaliação"); // Lança um erro se a resposta não for bem-sucedida
+                    }
                 })
                 .then(data => {
-                  if (data.status === "success") {
-                    mostrarPopup("Avaliação enviada com sucesso!", "popup");
-                    document.getElementById("avaliado").value = ""; // Limpa o campo de texto 'avaliado'
-                    document.getElementById("rating_1").checked = false; // Desmarca a opção de avaliação
-                  } else {
-                    mostrarPopup("Usuário não encontrado", "erroPopup");
-                  }
+                    if (data.status === "success") {
+                        // Exibe o pop-up de sucesso
+                        mostrarPopup("Avaliação enviada com sucesso!", "popup");
+                        document.getElementById("avaliado").value = ""; // Limpa o campo de texto 'avaliado'
+                        document.getElementById("rating_1").checked = false; // Desmarca a opção de avaliação
+                    } else {
+                        // Exibe um pop-up de erro informando que o usuário não foi encontrado
+                        mostrarPopup("Usuário não encontrado", "erroPopup");
+                    }
                 })
                 .catch(error => {
-                  console.error('Erro:', error); // Exibe o erro no console
-                  mostrarPopup("Erro ao enviar avaliação. Por favor, tente novamente.", "erroPopup"); // Exibe mensagem de erro genérica
+                    console.error('Erro:', error); // Exibe o erro no console
+                    mostrarPopup("Erro ao enviar avaliação. Por favor, tente novamente.", "erroPopup"); // Exibe mensagem de erro genérica
                 });
-              }
-
-              function mostrarPopup(mensagem, idPopup) {
+            }
+        
+            function mostrarPopup(mensagem, idPopup) {
                 var popup = document.getElementById(idPopup);
                 popup.innerText = mensagem;
                 popup.style.display = "block";
                 setTimeout(function() {
-                  popup.style.display = "none";
+                    popup.style.display = "none";
                 }, 1000); // Oculta o pop-up após 1 segundo
-              }
-            </script>
+            }
+        </script>
+
+
             <hr>
             <p class="text-start">Endereço</p>
             <p class="text-start fs-6">{{ cafeteria.endereco }}</p>
