@@ -121,6 +121,10 @@ def favorited_coffeeshop(request):
         return redirect('perfil', nome_cafeteria=cafeteria_name)
 
     return redirect('menu')
+
+def mapa (request):
+    return render(request,'mapa.html')
+
     
 
 
