@@ -1,4 +1,5 @@
 import json
+import random
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cadastro, Avaliacao3, Cliente, Favorite3, TagCafeteria3, TagUsuario
 from django.contrib.auth import authenticate, login as logind
@@ -69,7 +70,7 @@ def perfil(request, nome_cafeteria):
         return JsonResponse({'status': 'success'})
     else:
         cafeteria = get_object_or_404(Cadastro, nome_loja=nome_cafeteria)
-        tags = TagCafeteria3.objects.filter(user_id=request.user)
+        tags = TagCafeteria3.objects.filter(cafeteria=cafeteria.nome_loja)
         favorited = Favorite3.objects.filter(usuario=request.user.username, cafeteria=nome_cafeteria, user_id=request.user).exists()
         return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags, 'favorited': favorited})
 
@@ -88,10 +89,25 @@ def add_tag(request):
     return JsonResponse({'success': False, 'message': 'Invalid request'})
    
 
-
 def menu(request):
     cafeterias = Cadastro.objects.all()
-    context = {'cafeterias': cafeterias}
+    # Obtenha as tags do usuário logado
+    user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True)
+    
+    # Obtenha as cafeterias que têm pelo menos uma tag em comum com o usuário
+    recommended_cafeterias = list(Cadastro.objects.filter(
+        nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
+    ).distinct())
+    
+    # Se houver mais de 5 cafeterias recomendadas, selecione 5 aleatoriamente
+    if len(recommended_cafeterias) > 5:
+        recommended_cafeterias = random.sample(recommended_cafeterias, 5)
+    
+    context = {
+        'cafeterias': cafeterias,
+        'recommended_cafeterias': recommended_cafeterias,
+    }
+    
     return render(request, 'menu.html', context)
 
 def login(request):
@@ -129,7 +145,11 @@ def mapa (request):
 
     
 def perfil_usuario(request):
-    return render(request, 'userperfil.html', {'username': request.user.username})
+    user_tags = TagUsuario.objects.filter(usuario=request.user)
+    return render(request, 'userperfil.html', {
+        'username': request.user.username,
+        'user_tags': user_tags
+    })
 
 @login_required
 @csrf_exempt

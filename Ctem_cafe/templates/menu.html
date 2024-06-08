@@ -35,6 +35,9 @@
     color: #fff5e6;
 }
 
+#recomendados{
+  color: black;
+}
  
 
   /* Estilização do cabeçalho */
@@ -104,7 +107,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" style="color: burlywood;" aria-disabled="true">Disabled</a>
+            <a class="nav-link" style="color: burlywood;" href="{% url 'mapa' %}">Mapa</a>
           </li>
         </ul>
         <form class="d-flex" role="search">
@@ -135,6 +138,13 @@
           <li><a href="#">Tag 3</a></li>
           <li><a href="#">Tag 4</a></li>
         </ul>
+        <h4>Cafeterias recomendadas para você:</h4>
+        {% for cafeteria in recommended_cafeterias %}
+            <div>
+                <h5><a href="{% url 'perfil' cafeteria.nome_loja %}" id="recomendados">{{ cafeteria.nome_loja }}</a></h5>
+            </div>
+        {% endfor %}
+        
       </div>
     </div>
 
@@ -164,6 +174,8 @@
     </div>
   </div>
 </div>
+
+
 
 </body>
 </html>

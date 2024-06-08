@@ -80,6 +80,9 @@
             <p class="text-start">Tags</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
               <!-- Button trigger modal -->
+              {% for tag in user_tags %}
+                <h6>{{tag.tag_name}}</h6>
+              {% endfor %}
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Adicionar +
               </button>
