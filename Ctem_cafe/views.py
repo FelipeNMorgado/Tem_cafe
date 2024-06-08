@@ -1,6 +1,6 @@
 import json
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cadastro, Avaliacao3, Cliente, Favorite3, TagCafeteria2
+from .models import Cadastro, Avaliacao3, Cliente, Favorite3, TagCafeteria3, TagUsuario
 from django.contrib.auth import authenticate, login as logind
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
@@ -69,7 +69,7 @@ def perfil(request, nome_cafeteria):
         return JsonResponse({'status': 'success'})
     else:
         cafeteria = get_object_or_404(Cadastro, nome_loja=nome_cafeteria)
-        tags = TagCafeteria2.objects.filter(user_id=request.user)
+        tags = TagCafeteria3.objects.filter(user_id=request.user)
         favorited = Favorite3.objects.filter(usuario=request.user.username, cafeteria=nome_cafeteria, user_id=request.user).exists()
         return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags, 'favorited': favorited})
 
@@ -78,13 +78,15 @@ def perfil(request, nome_cafeteria):
 def add_tag(request):
     if request.method == 'POST':
         data = json.loads(request.body)
+        cafeteria_name = data.get('post_id')  # Corrigido para pegar do JSON
         tag_name = data.get('tag')
         if tag_name:
-            tag = TagCafeteria2(user_id=request.user, tag_name=tag_name)
+            tag = TagCafeteria3(user_id=request.user, cafeteria=cafeteria_name, tag_name=tag_name)
             tag.save()
             return JsonResponse({'success': True})
         return JsonResponse({'success': False, 'message': 'Invalid tag name'})
     return JsonResponse({'success': False, 'message': 'Invalid request'})
+   
 
 
 def menu(request):
@@ -126,5 +128,18 @@ def mapa (request):
     return render(request,'mapa.html')
 
     
+def perfil_usuario(request):
+    return render(request, 'userperfil.html', {'username': request.user.username})
 
-
+@login_required
+@csrf_exempt
+def add_tag_usuario(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        tag_name = data.get('tag')
+        if tag_name:
+            tag = TagUsuario(user_id=request.user, usuario=request.user.username, tag_name=tag_name)
+            tag.save()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'message': 'Invalid tag name'})
+    return JsonResponse({'success': False, 'message': 'Invalid request'})

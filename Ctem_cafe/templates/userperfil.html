@@ -68,19 +68,8 @@
           
           <div class="col border">
             <div class="d-flex align-items-center">
-              <p class="text-start me-3">Cafeteria: {{ cafeteria.nome_loja }}</p>
+              <p class="text-start me-3">Usuario: {{ username }}</p>
               <div class="con-like">
-                
-                  <form action="{% url 'favorited_coffeeshop' %}" method="POST" class="ui form">
-                      {% csrf_token %}
-                      <input type="hidden" name="post_id" value="{{ cafeteria.nome_loja }}">
-                      {% if favorited %}
-                          <button type="submit" class="ui button positive">❤</button>
-                      {% else %}
-                          <button type="submit" class="ui button negative">♡</button>
-                      {% endif %}
-                  </form>
-
               </div>
             </div>
             
@@ -98,104 +87,74 @@
               <!-- Modal -->
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">Nova Tag:</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Nova Tag:</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label fs-5">Opções:</label>
+                                <select id="inputState" class="form-select" name="inputState">
+                                    <option selected>Escolha...</option>
+                                    <option>Trabalho</option>
+                                    <option>Estudo</option>
+                                    <option>Business</option>
+                                    <option>Pet Friendly</option>
+                                    <option>Café Arábica</option>
+                                    <option>Café Catuaí</option>
+                                    <option>Café Robusta</option>
+                                    <option>Café Geisha</option>
+                                    <option>Café Kona</option>
+                                </select>
+                                <button type="button" class="btn btn-primary mt-3" id="saveTagButton">Salvar</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                      <div class="col-md-4">
-                        <label for="inputState" class="form-label fs-5">Opções:</label>
-                        <select id="inputState" class="form-select" name="inputState">
-                          <option selected>Escolha...</option>
-                          <option>Trabalho</option>
-                          <option>Estudo</option>
-                          <option>Business</option>
-                          <option>Pet Friendly</option>
-                          <option>Café Arábica</option>
-                          <option>Café Catuaí</option>
-                          <option>Café Robusta</option>
-                          <option>Café Geisha</option>
-                          <option>Café Kona</option>
-                        </select>
-                        <button type="button" class="btn btn-primary mt-3" id="saveTagButton" data-cafeteria="{{ cafeteria.nome_loja }}">Salvar</button>
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
-
-              <!-- Adicione o token CSRF necessário para o Django -->
-              <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-              <script>
-                document.getElementById('saveTagButton').addEventListener('click', function() {
-                  const selectedTag = document.getElementById('inputState').value;
-              
-                  if (selectedTag === "Escolha...") {
+            </div>
+            
+            <!-- Adicione o token CSRF necessário para o Django -->
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            
+            <script>
+            document.getElementById('saveTagButton').addEventListener('click', function() {
+                const selectedTag = document.getElementById('inputState').value;
+            
+                if (selectedTag === "Escolha...") {
                     alert("Por favor, selecione uma tag.");
                     return;
-                  }
-              
-                  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                  const cafeteriaName = this.getAttribute('data-cafeteria'); // Captura o nome da cafeteria
-              
-                  fetch("{% url 'add_tag' %}", {
+                }
+            
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+                fetch("{% url 'add_tag_usuario' %}", {
                     method: 'POST',
                     headers: {
-                      'Content-Type': 'application/json',
-                      'X-CSRFToken': csrfToken
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
                     },
                     body: JSON.stringify({
-                      tag: selectedTag,
-                      post_id: cafeteriaName // Adiciona o nome da cafeteria ao corpo da requisição
+                        tag: selectedTag
                     })
-                  })
-                  .then(response => response.json())
-                  .then(data => {
+                })
+                .then(response => response.json())
+                .then(data => {
                     if (data.success) {
-                      alert("Tag adicionada com sucesso!");
-                      location.reload(); // recarrega a página para mostrar a tag adicionada
+                        alert("Tag adicionada com sucesso!");
+                        location.reload(); // recarrega a página para mostrar a tag adicionada
                     } else {
-                      alert("Houve um erro ao adicionar a tag.");
+                        alert("Houve um erro ao adicionar a tag.");
                     }
-                  });
                 });
-              </script>
+            });
+            </script>
             </div>
             <hr>
-            <p class="text-start ">Avaliação</p>
             
-            <div class="formulario">
-              <form id="avaliacaoForm" method="post">
-                  {% csrf_token %}
-                  <input type="hidden" name="avaliado" value="{{ cafeteria.nome_loja }}">
-                  <div class="rating">
-                      <input type='radio' hidden name='rate' id='rating_5' data-idx='0' value='5'>	
-                      <label for='rating_5'></label>
-                  
-                      <input type='radio' hidden name='rate' id='rating_4' data-idx='1' value='4'>
-                      <label for='rating_4'></label>
-                  
-                      <input type='radio' hidden name='rate' id='rating_3' data-idx='2' value='3'>
-                      <label for='rating_3'></label>
-                  
-                      <input type='radio' hidden name='rate' id='rating_2' data-idx='3' value='2'>
-                      <label for='rating_2'></label>
-                  
-                      <input type='radio' hidden name='rate' id='rating_1' data-idx='4' value='1' required>
-                      <label for='rating_1'></label>
-                  </div>
-          
-                  <div class="wrapper">
-                      <button href="#" class="enviar-avaliacao" type="submit"><span>Enviar</span></button>
-                  </div>
-              </form>
-              <div id="erroMessage" style="display: none; color: red;"></div>
-          </div>
 
           <div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 128, 0, 0.7); color: #fff; padding: 20px; border-radius: 5px; z-index: 9999;">
             Avaliação enviada com sucesso!
@@ -211,12 +170,7 @@
                 var formData = new FormData(document.getElementById("avaliacaoForm")); // Obtém os dados do formulário
         
                 // Envia os dados via AJAX usando Fetch API
-                fetch("{% url 'perfil' nome_cafeteria=cafeteria.nome_loja %}", {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value // Adiciona o token CSRF no cabeçalho
-                    }
+                
                 })
                 .then(response => {
                     if (response.ok) {

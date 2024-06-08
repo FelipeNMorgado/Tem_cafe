@@ -41,7 +41,8 @@ class Avaliacao3(models.Model):
     nota = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class TagCafeteria2(models.Model):
+class TagCafeteria3(models.Model):
+    cafeteria = models.CharField(max_length=100)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     tag_name = models.CharField(max_length=100)
 
@@ -55,3 +56,11 @@ class Favorite3(models.Model):
     value = models.CharField(choices=[('like', 'Like'), ('unlike', 'Unlike')], max_length=10)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
+class TagUsuario(models.Model):
+    usuario = models.CharField(max_length=100)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    tag_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.user_id.username} - {self.tag_name}'
