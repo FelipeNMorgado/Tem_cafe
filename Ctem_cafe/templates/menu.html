@@ -176,6 +176,27 @@
 </div>
 
 
+{% for cafe in media %}
+        <div class="card">
+            <div class="container">
+                <h4><b>Posição: {{ forloop.counter }}</b></h4>
+                <h4>Usuário: {{ cafe.nome_loja }}</h4>
+                <p>Total de Avaliações: {{ cafe.num_avaliacoes }}</p>
+                <div class="avaliacoes">
+                <p>Média de Avaliação:
+                    
+                    {% if cafe.avg_nota %}
+                       ({{ cafe.avg_nota }})
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
 
 </body>
 </html>

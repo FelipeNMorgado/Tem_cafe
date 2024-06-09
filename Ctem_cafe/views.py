@@ -1,5 +1,6 @@
 import json
 import random
+from django.db.models import Count, Avg
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cadastro, Avaliacao3, Cliente, Favorite3, TagCafeteria3, TagUsuario
 from django.contrib.auth import authenticate, login as logind
@@ -40,7 +41,7 @@ def cadastro(request):
         )
         cadastro.save()
 
-        return redirect('home')
+        return redirect('login')
 
 def cadastro_cliente(request):
     if request.method == "GET":
@@ -102,13 +103,28 @@ def menu(request):
     # Se houver mais de 5 cafeterias recomendadas, selecione 5 aleatoriamente
     if len(recommended_cafeterias) > 5:
         recommended_cafeterias = random.sample(recommended_cafeterias, 5)
+
+    cofeeshop = Cadastro.objects.all()
+
+    for cafe in cofeeshop:
+        avaliacoes_cafe = Avaliacao3.objects.filter(avaliado=cafe.nome_loja)
+        cafe.num_avaliacoes = avaliacoes_cafe.count()  # Contagem das avaliações recebidas
+        media = avaliacoes_cafe.aggregate(avg_nota=Avg('nota'))['avg_nota']
+        cafe.avg_nota = round(media, 1) if media is not None else None
+
+    cofeeshop = sorted(cofeeshop, key=lambda x: x.avg_nota if x.avg_nota is not None else float('-inf'), reverse=True)
     
+    limit = 5
+    cofeeshop = cofeeshop[:limit]
+
     context = {
         'cafeterias': cafeterias,
         'recommended_cafeterias': recommended_cafeterias,
+        'media': cofeeshop,
     }
     
     return render(request, 'menu.html', context)
+
 
 def login(request):
     if request.method == "GET":
@@ -119,6 +135,8 @@ def login(request):
         vali = authenticate(username=name, password=senha)
         if vali:
             logind(request, vali)
+            if vali.is_superuser:
+                return redirect('perfil', nome_cafeteria=name)
             return redirect('menu')
         else:
             return HttpResponse('Você precisa estar logado')
@@ -163,3 +181,24 @@ def add_tag_usuario(request):
             return JsonResponse({'success': True})
         return JsonResponse({'success': False, 'message': 'Invalid tag name'})
     return JsonResponse({'success': False, 'message': 'Invalid request'})
+
+
+def cadastro_cafeteria(request):
+    if request.method == "GET":
+        return render(request, 'cadastro_cliente.html')
+    elif request.method == "POST":
+        nome = request.POST.get('inputFullName')
+        email = request.POST.get('inputEmail4')
+        senha = request.POST.get('inputPassword4')
+
+        user = User.objects.filter(email=email).first()
+
+        if user:
+            return HttpResponse("Esse email já está cadastrado")
+
+        user = User.objects.create_user(username=nome, email=email, password=senha)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
+        return redirect('cadastro')
