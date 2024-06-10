@@ -150,26 +150,28 @@ def menu(request):
 
     return render(request, 'menu.html', context)
 
+
+
 def busca(request):
+    search_term = request.GET.get('search')
+    filters = request.GET.getlist('filters[]')
+    
     cafeterias = Cadastro2.objects.all()
-    # Obtenha as tags do usuário logado
-    user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True) 
 
-    recommended_cafeterias = list(Cadastro2.objects.filter(
-        nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
-    ).distinct())
-
-
-    if len(recommended_cafeterias) > 5:
-        recommended_cafeterias = random.sample(recommended_cafeterias, 5)
-
+    if filters:
+        tag_cafeterias = TagCafeteria3.objects.filter(tag_name__in=filters).values_list('cafeteria', flat=True)
+        cafeterias = cafeterias.filter(nome_loja__in=tag_cafeterias).distinct()
+    
+    if search_term:
+        cafeterias = cafeterias.filter(nome_loja__icontains=search_term)
 
     context = {
         'cafeterias': cafeterias,
-        'recommended_cafeterias': recommended_cafeterias,
     }
 
-    return render(request, 'busca.html', context) 
+    return render(request, 'busca.html', context)
+
+
 
 def login(request):
     if request.method == "GET":

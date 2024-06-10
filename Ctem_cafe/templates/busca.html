@@ -125,13 +125,53 @@
   </nav>
 <!-- FIM DA BARRA DE NAVEGAÇÃO-->
 
+
+
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Filtros
+  </a>
+
+  <ul class="dropdown-menu">
+    <form action="{% url 'busca' %}" method="GET">
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Trabalho"> Trabalho</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Estudo"> Estudo</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Business"> Business</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Pet Friendly"> Pet Friendly</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Arábica"> Café Arábica</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Catuaí"> Café Catuaí</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Robusta"> Café Robusta</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Gisha"> Café Gisha</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Kona"> Café Kona</label>
+      </li>
+  </ul>
+</div>
+
   <div class="container">
     <div class="row">
       <!-- Filtro -->
       <div class="search">
-        <input placeholder="Search..." type="text">
-        <button type="submit">Go</button>
-      </div>
+            <input type="text" name="search" placeholder="Search..." >
+            <button type="submit">Go</button>
+        </form>
+    </div>
 
       <br>
       <br>
@@ -162,6 +202,7 @@
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 </html>
