@@ -16,5 +16,7 @@ urlpatterns = [
     path('favorited_coffeeshop/', views.favorited_coffeeshop, name='favorited_coffeeshop'),
     path('menu/', views.menu, name='menu'),
     path('mapa/', views.mapa, name='mapa'),
-    path('busca/', views.busca, name='busca')
+    path('busca/', views.busca, name='busca'),
+    path('noticias/', views.noticias, name='noticias'),
+    path('escrever_noticias/', views.escrever_noticias, name='escrever_noticias'),
 ]

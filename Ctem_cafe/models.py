@@ -66,3 +66,12 @@ class TagUsuario(models.Model):
 
     def __str__(self):
         return f'{self.user_id.username} - {self.tag_name}'
+    
+
+class Noticias(models.Model):
+    cafeteria = models.CharField(max_length=100)
+    arq = models.URLField()
+    titulo = models.CharField(max_length=100)
+    descricao = models.TextField()
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    

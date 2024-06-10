@@ -2,7 +2,7 @@ import json
 import random
 from django.db.models import Count, Avg
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cadastro2, Avaliacao3, Cliente, Favorite3, TagCafeteria3, TagUsuario
+from .models import Cadastro2, Avaliacao3, Cliente, Favorite3, TagCafeteria3, TagUsuario, Noticias
 from django.contrib.auth import authenticate, login as logind
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
@@ -294,3 +294,30 @@ class edit_perfil(UpdateView):
         context["titulo"] = "Editando Cadastro"
         context["botao"] = "Atualizar"
         return context
+
+
+def noticias(request):
+    noticias = Noticias.objects.all()
+    return render(request, 'noticias.html', {'noticias': noticias})
+
+
+def escrever_noticias(request):
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        description = request.POST.get('description')
+        foto = request.POST.get('foto')
+        cafeteria = request.user.username
+
+        noticia = Noticias(
+            titulo=titulo,
+            descricao=description,
+            arq=foto,
+            cafeteria=cafeteria,
+            user_id=request.user
+        )
+        noticia.save()
+        return redirect('perfil', nome_cafeteria=cafeteria)
+    else:
+        return render(request, 'escrever_noticias.html')
+
+
