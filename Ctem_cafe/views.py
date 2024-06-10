@@ -135,11 +135,11 @@ def menu(request):
     return render(request, 'menu.html', context)
 
 def busca(request):
-    cafeterias = Cadastro.objects.all()
+    cafeterias = Cadastro2.objects.all()
     # Obtenha as tags do usuário logado
     user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True) 
 
-    recommended_cafeterias = list(Cadastro.objects.filter(
+    recommended_cafeterias = list(Cadastro2.objects.filter(
         nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
     ).distinct())
 
