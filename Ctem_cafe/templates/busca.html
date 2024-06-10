@@ -46,29 +46,6 @@
     margin-bottom: 20px;
   }
 
-  /* Estilização do filtro */
-  .filter-container {
-    height: 635px;
-    margin-right: 20px; /* Ajuste para adicionar espaço à direita */
-    width: 100%; /* Largura total */
-  }
-
-  /* Estilização da lista de filtros */
-  .filter-container ul {
-    padding-left: 0; /* Removendo o preenchimento padrão da lista */
-  }
-
-  /* Estilização dos itens da lista de filtros */
-  .filter-container ul li {
-    list-style: none; /* Removendo os marcadores de lista */
-  }
-
-  /* Estilização do campo de pesquisa */
-  .filter-container input {
-    width: 100%; /* Largura total */
-    margin-bottom: 10px; /* Espaço entre o campo de pesquisa e a lista de filtros */
-  }
-
   /* Estilização do conteúdo */
   .content-container {
     display: flex;
@@ -76,6 +53,39 @@
     gap: 20px;
     justify-content: center;
   }
+
+  .search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .search input[type="text"] {
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search button[type="submit"] {
+    background-color: #4e99e9;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+    transition: .9s ease;
+  }
+  
+  .search button[type="submit"]:hover {
+    transform: scale(1.1);
+    color: rgb(255, 255, 255);
+    background-color: blue;
+  }
+
 </style>
 
 <body>
@@ -110,56 +120,48 @@
             <a class="nav-link" style="color: burlywood;" href="{% url 'mapa' %}">Mapa</a>
           </li>
         </ul>
-        <li class="nav-item">
-          <a class="nav-link active" style="color: burlywood;" aria-current="page" href="{% url 'busca' %}">Busca</a>
-        </li>
       </div>
     </div>
   </nav>
 <!-- FIM DA BARRA DE NAVEGAÇÃO-->
 
+  <div class="container">
+    <div class="row">
+      <!-- Filtro -->
+      <div class="search">
+        <input placeholder="Search..." type="text">
+        <button type="submit">Go</button>
+      </div>
 
-  <div class="row">
-    <!-- Filtro -->
-      <h4>Suas Cafeterias Favoritas</h4> 
-
-      {% for fav in favoritos %}
-          <div>
-            <h5><a href="{% url 'perfil' fav.cafeteria %}" id="recomendados">{{ fav.cafeteria }}</a></h5>
-          </div>
-      {% endfor %}
-
-   
-      <h4>Cafeterias recomendadas para você:</h4>
-      {% for cafeteria in recommended_cafeterias %}
-          <div>
-              <h5><a href="{% url 'perfil' cafeteria.nome_loja %}" id="recomendados">{{ cafeteria.nome_loja }}</a></h5>
-          </div>
-      {% endfor %}
-
-
-{% for cafe in media %}
-        <div class="card">
-            <div class="container">
-                <h4><b>Posição: {{ forloop.counter }}</b></h4>
-                <h4>Usuário: {{ cafe.nome_loja }}</h4>
-                <p>Total de Avaliações: {{ cafe.num_avaliacoes }}</p>
-                <div class="avaliacoes">
-                <p>Média de Avaliação:
-                    
-                    {% if cafe.avg_nota %}
-                       ({{ cafe.avg_nota }})
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </p>
-                </div>
+      <br>
+      <br>
+      
+      <!-- Conteúdo das Cafeterias -->
+      <div class="col-md-12"> <!-- Ajustado para 12 colunas -->
+        <h1 class="header">Lista de Cafeterias</h1>
+        <hr class="hr-small">
+        <div class="content-container">
+          <!-- Chamando os filtros -->
+          <!-- Criando os cards das cafeterias -->
+          {% for coffeshop in cafeterias %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{coffeshop.nome_loja}}</h5>
+              <p class="card-text">Bairro: {{coffeshop.bairro}}</p>
+              <p class="card-text">Endereço: {{coffeshop.endereco|truncatechars_html:100}}</p>
+              <p class="card-text">Complemento: {{coffeshop.complemento}}</p>
+              <a href="{% url 'perfil' nome_cafeteria=coffeshop.nome_loja %}" class="btn">Read More</a>
             </div>
+          </div>
+          {% empty %}
+          <div class="col-md-12 text-center">
+            <h2>Não há Cafeterias disponíveis</h2>
+          </div>
+          {% endfor %}
         </div>
-    {% endfor %}
-
-
-
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
