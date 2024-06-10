@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Cadastro(models.Model):
+class Cadastro2(models.Model):
     email = models.EmailField(primary_key=True)
     senha = models.CharField(max_length=100)
     nome_loja = models.CharField(max_length=255)
@@ -11,6 +11,8 @@ class Cadastro(models.Model):
     bairro = models.CharField(max_length=100)
     estado = models.CharField(max_length=100)
     cep = models.CharField(max_length=10)
+    descricao = models.TextField()
+    arq = models.URLField()
     concordo_termos = models.BooleanField()
 
 

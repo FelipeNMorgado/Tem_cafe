@@ -53,11 +53,17 @@
         <div class="row align-items-start">
           <div class="col border">
             <br>
-            <div class="circle">
-                <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/7407996-user-icon-person-icon-client-symbol-login-head-sign-icon-design-vetor.jpg">
-            </div>
+            {% if cafeteria.arq %}
+              <img src="{{ cafeteria.arq }}" alt="Imagem do Perfil" class="foto-quadrada foto-redonda" >
+            {% else %}
+                <p>Imagem não disponível</p>
+            {% endif %}
             <br><br>
 
+            <a href="{% url 'edit_perfil' nome_loja=cafeteria.nome_loja %}" style="margin-left: 40%;">
+              <button type="submit" class="btn btn-primary">Editar perfil</button>
+          </a>
+            
             <p class="text-start te position-relative width:100px">Cardápio:</p>
             
             <div class="cardapio">
@@ -86,7 +92,7 @@
             
             <hr>
             <p class="text-start">História</p>
-            <p class="text-start fs-6">{{ cafeteria.historia }}</p>
+            <p class="text-start fs-6">{{ cafeteria.descricao }}</p>
             <hr>
             <p class="text-start">Tags</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">

@@ -2,14 +2,16 @@ import json
 import random
 from django.db.models import Count, Avg
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cadastro, Avaliacao3, Cliente, Favorite3, TagCafeteria3, TagUsuario
+from .models import Cadastro2, Avaliacao3, Cliente, Favorite3, TagCafeteria3, TagUsuario
 from django.contrib.auth import authenticate, login as logind
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
-
+from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
+from django.utils.decorators import method_decorator
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -29,7 +31,7 @@ def cadastro(request):
         cep = request.POST.get('inputZip')
         concordo_termos = request.POST.get('gridCheck')
 
-        cadastro = Cadastro(
+        cadastro = Cadastro2(
             email=email,
             senha=senha,
             nome_loja=nome_loja,
@@ -72,7 +74,7 @@ def perfil(request, nome_cafeteria):
         Avaliacao3.objects.create(avaliador=avaliador, avaliado=avaliado, nota=nota, user=request.user)
         return JsonResponse({'status': 'success'})
     else:
-        cafeteria = get_object_or_404(Cadastro, nome_loja=nome_cafeteria)
+        cafeteria = get_object_or_404(Cadastro2, nome_loja=nome_cafeteria)
         tags = TagCafeteria3.objects.filter(cafeteria=cafeteria.nome_loja)
         favorited = Favorite3.objects.filter(usuario=request.user.username, cafeteria=nome_cafeteria, user_id=request.user).exists()
         return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags, 'favorited': favorited})
@@ -93,12 +95,12 @@ def add_tag(request):
    
 
 def menu(request):
-    cafeterias = Cadastro.objects.all()
+    cafeterias = Cadastro2.objects.all()
     # Obtenha as tags do usuário logado
     user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True)
     
     # Obtenha as cafeterias que têm pelo menos uma tag em comum com o usuário
-    recommended_cafeterias = list(Cadastro.objects.filter(
+    recommended_cafeterias = list(Cadastro2.objects.filter(
         nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
     ).distinct())
     
@@ -106,7 +108,7 @@ def menu(request):
     if len(recommended_cafeterias) > 5:
         recommended_cafeterias = random.sample(recommended_cafeterias, 5)
 
-    cofeeshop = Cadastro.objects.all()
+    cofeeshop = Cadastro2.objects.all()
 
     for cafe in cofeeshop:
         avaliacoes_cafe = Avaliacao3.objects.filter(avaliado=cafe.nome_loja)
@@ -162,7 +164,7 @@ def favorited_coffeeshop(request):
 
 
 def mapa(request):
-    cafeterias = Cadastro.objects.all()
+    cafeterias = Cadastro2.objects.all()
     cafes_json = serialize('json', cafeterias, fields=('nome_loja', 'endereco', 'complemento', 'cidade', 'bairro', 'estado', 'cep'))
     context = {
         'cafes_json': cafes_json
@@ -211,3 +213,25 @@ def cadastro_cafeteria(request):
         user.save()
 
         return redirect('cadastro')
+    
+
+@method_decorator(login_required, name='dispatch')
+class edit_perfil(UpdateView):
+    model = Cadastro2
+    fields = ['descricao', 'arq']
+    template_name = 'edit_perfil.html'
+    
+    def get_success_url(self):
+        nome_cafeteria = self.object.nome_loja
+        return reverse_lazy('perfil', kwargs={'nome_cafeteria': nome_cafeteria})
+
+    def get_object(self, queryset=None):
+        nome_loja = self.kwargs.get('nome_loja')
+        return get_object_or_404(Cadastro2, nome_loja=nome_loja)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["titulo"] = "Editando Cadastro"
+        context["botao"] = "Atualizar"
+        return context
+

@@ -7,6 +7,7 @@ urlpatterns = [
     path('cadastro_cliente/', views.cadastro_cliente, name='cadastro_cliente'),
     path('cadastro_cafeteria/', views.cadastro_cafeteria, name='cadastro_cafeteria'),
     path('perfil/<str:nome_cafeteria>/', views.perfil, name='perfil'),
+    path('edit_perfil/<str:nome_loja>/', views.edit_perfil.as_view(), name='edit_perfil'),  # Ajuste aqui
     path('perfil_usuario/', views.perfil_usuario, name='perfil_usuario'),
     path('add_tag/', views.add_tag, name='add_tag'),
     path('add_tag_usuario/', views.add_tag_usuario, name='add_tag_usuario'),
