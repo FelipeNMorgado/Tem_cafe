@@ -5,11 +5,52 @@
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt9hfwblf8bTiSSlbOygyjTH5d77NXSa0&callback=initMap&libraries=places"></script>
     <script>
       let map;
+      let infowindow;
+      let userMarker;
+      
       function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: { lat: -8.059683799743652, lng: -34.87248992919922 },
-          zoom: 14
-        });
+        infowindow = new google.maps.InfoWindow();
+        
+        // Verifica se o navegador suporta geolocalização
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            const userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: userLocation,
+              zoom: 14,
+              styles: [
+                {
+                  featureType: 'poi',
+                  elementType: 'labels.icon',
+                  stylers: [{ visibility: 'off' }]
+                }
+              ]
+            });
+            
+            userMarker = new google.maps.Marker({
+              position: userLocation,
+              map: map,
+              title: 'Sua localização',
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'blue',
+                fillOpacity: 1,
+                scale: 10,
+                strokeColor: 'white',
+                strokeWeight: 2
+              }
+            });
+          }, function() {
+            handleLocationError(true, infowindow, map.getCenter());
+          });
+        } else {
+          // Navegador não suporta geolocalização
+          handleLocationError(false, infowindow, map.getCenter());
+        }
 
         const cafes = JSON.parse('{{ cafes_json|escapejs }}');
         const geocoder = new google.maps.Geocoder();
@@ -21,7 +62,20 @@
               const marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location,
-                title: cafe.fields.nome_loja
+                title: cafe.fields.nome_loja,
+                icon: {
+                  path: google.maps.SymbolPath.CROSS,
+                  scale: 10,
+                  fillColor: '#FF0000',
+                  fillOpacity: 1,
+                  strokeWeight: 1,
+                  strokeColor: '#FFFFFF'
+                }
+              });
+
+              google.maps.event.addListener(marker, 'click', function() {
+                infowindow.setContent(`<div><strong>${cafe.fields.nome_loja}</strong><br>${enderecoCompleto}</div>`);
+                infowindow.open(map, this);
               });
             } else {
               console.log('Geocode falhou devido a: ' + status);
@@ -29,11 +83,20 @@
           });
         });
       }
+
+      function handleLocationError(browserHasGeolocation, infowindow, userLocation) {
+        infowindow.setPosition(userLocation);
+        infowindow.setContent(browserHasGeolocation ?
+                              'Erro: O serviço de geolocalização falhou.' :
+                              'Erro: Seu navegador não suporta geolocalização.');
+        infowindow.open(map);
+      }
     </script>
   </head>
   <style>
     #map {
-      height: 100%;
+      height: 50%;
+      width: 50%;
     }
     html, body {
       height: 100%;
