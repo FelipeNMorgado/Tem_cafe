@@ -92,7 +92,23 @@ def add_tag(request):
             return JsonResponse({'success': True})
         return JsonResponse({'success': False, 'message': 'Invalid tag name'})
     return JsonResponse({'success': False, 'message': 'Invalid request'})
-   
+
+@login_required
+@csrf_exempt
+def remove_tag(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        tag_id = data.get('tag_id')
+        try:
+            tag = TagCafeteria3.objects.get(id=tag_id)
+            if tag.user_id == request.user:
+                tag.delete()
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse({'success': False, 'message': 'Não autorizado'})
+        except TagCafeteria3.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Tag não encontrada'})
+    return JsonResponse({'success': False, 'message': 'Requisição inválida'})
 
 def menu(request):
     cafeterias = Cadastro2.objects.all()
@@ -219,6 +235,24 @@ def add_tag_usuario(request):
     return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 
+@login_required
+@csrf_exempt
+def remove_tag_usuario(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        tag_id = data.get('tag_id')
+        try:
+            tag = TagUsuario.objects.get(id=tag_id)
+            if tag.user_id == request.user:
+                tag.delete()
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse({'success': False, 'message': 'Não autorizado'})
+        except TagUsuario.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Tag não encontrada'})
+    return JsonResponse({'success': False, 'message': 'Requisição inválida'})
+
+
 def cadastro_cafeteria(request):
     if request.method == "GET":
         return render(request, 'cadastro_cliente.html')
@@ -238,7 +272,6 @@ def cadastro_cafeteria(request):
         user.save()
 
         return redirect('cadastro')
-    
 
 @method_decorator(login_required, name='dispatch')
 class edit_perfil(UpdateView):
@@ -259,4 +292,3 @@ class edit_perfil(UpdateView):
         context["titulo"] = "Editando Cadastro"
         context["botao"] = "Atualizar"
         return context
-

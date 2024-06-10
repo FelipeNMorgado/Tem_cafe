@@ -98,7 +98,10 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
 
               {% for tag in tags %}
-                <h6>{{tag.tag_name}}</h6>
+                <div class="tag-item">
+                    <h6>{{tag.tag_name}}</h6>
+                    <button type="button" class="btn btn-danger btn-sm remove-tag-button" data-tag-id="{{ tag.id }}">X</button>
+                </div>
               {% endfor %}
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -172,6 +175,31 @@
                     } else {
                       alert("Houve um erro ao adicionar a tag.");
                     }
+                  });
+                });
+
+                document.querySelectorAll('.remove-tag-button').forEach(button => {
+                  button.addEventListener('click', function() {
+                    const tagId = this.getAttribute('data-tag-id');
+                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                    fetch("{% url 'remove_tag' %}", {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                      },
+                      body: JSON.stringify({ tag_id: tagId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                      if (data.success) {
+                        alert("Tag removida com sucesso!");
+                        location.reload(); // recarrega a página para atualizar as tags
+                      } else {
+                        alert("Houve um erro ao remover a tag.");
+                      }
+                    });
                   });
                 });
               </script>
