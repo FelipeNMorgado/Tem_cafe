@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Marker</title>
-    <!-- The callback parameter is required, so we use console.debug as a noop -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCf1Peszt2DibuDIV89VNyuORYl7KCvhX4&callback=console.debug&libraries=maps,marker&v=beta">
+    <title>Mapa de Cafeterias</title>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt9hfwblf8bTiSSlbOygyjTH5d77NXSa0&callback=initMap&libraries=places"></script>
+    <script>
+      let map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: { lat: -8.059683799743652, lng: -34.87248992919922 },
+          zoom: 14
+        });
+
+        const cafes = JSON.parse('{{ cafes_json|escapejs }}');
+        const geocoder = new google.maps.Geocoder();
+
+        cafes.forEach(cafe => {
+          const enderecoCompleto = `${cafe.fields.endereco}, ${cafe.fields.complemento}, ${cafe.fields.bairro}, ${cafe.fields.cidade}, ${cafe.fields.estado}, ${cafe.fields.cep}`;
+          geocoder.geocode({ 'address': enderecoCompleto }, function (results, status) {
+            if (status == 'OK') {
+              const marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+                title: cafe.fields.nome_loja
+              });
+            } else {
+              console.log('Geocode falhou devido a: ' + status);
+            }
+          });
+        });
+      }
     </script>
-    
   </head>
   <style>
-
-    /* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
-gmp-map {
-  height: 100%;
-}
-
-/* Optional: Makes the sample page fill the window. */
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
+    #map {
+      height: 100%;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
   </style>
   <body>
-    <gmp-map center="-8.059683799743652,-34.87248992919922" zoom="14" map-id="DEMO_MAP_ID">
-      <gmp-advanced-marker position="-8.059683799743652,-34.87248992919922" title="My location"></gmp-advanced-marker>
-    </gmp-map>
+    <div id="map"></div>
   </body>
 </html>

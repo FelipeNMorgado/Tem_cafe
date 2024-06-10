@@ -8,6 +8,8 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
+
 
 def home(request):
     return render(request, 'index.html')  # Supondo que você tenha um template chamado index.html
@@ -158,8 +160,15 @@ def favorited_coffeeshop(request):
 
     return redirect('menu')
 
-def mapa (request):
-    return render(request,'mapa.html')
+
+def mapa(request):
+    cafeterias = Cadastro.objects.all()
+    cafes_json = serialize('json', cafeterias, fields=('nome_loja', 'endereco', 'complemento', 'cidade', 'bairro', 'estado', 'cep'))
+    context = {
+        'cafes_json': cafes_json
+    }
+    return render(request, 'mapa.html', context)
+
 
     
 def perfil_usuario(request):
