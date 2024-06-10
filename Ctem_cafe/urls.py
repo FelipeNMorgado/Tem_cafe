@@ -13,5 +13,6 @@ urlpatterns = [
     path('add_tag_usuario/', views.add_tag_usuario, name='add_tag_usuario'),
     path('favorited_coffeeshop/', views.favorited_coffeeshop, name='favorited_coffeeshop'),
     path('menu/', views.menu, name='menu'),
-    path('mapa/', views.mapa, name='mapa')
+    path('mapa/', views.mapa, name='mapa'),
+    path('busca/', views.busca, name='busca')
 ]

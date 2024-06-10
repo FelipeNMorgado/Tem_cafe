@@ -98,13 +98,15 @@ def menu(request):
     cafeterias = Cadastro2.objects.all()
     # Obtenha as tags do usuário logado
     user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True)
+
     
     # Obtenha as cafeterias que têm pelo menos uma tag em comum com o usuário
     recommended_cafeterias = list(Cadastro2.objects.filter(
-        nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
+    nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
+
     ).distinct())
-    
-    # Se houver mais de 5 cafeterias recomendadas, selecione 5 aleatoriamente
+
+
     if len(recommended_cafeterias) > 5:
         recommended_cafeterias = random.sample(recommended_cafeterias, 5)
 
@@ -117,18 +119,41 @@ def menu(request):
         cafe.avg_nota = round(media, 1) if media is not None else None
 
     cofeeshop = sorted(cofeeshop, key=lambda x: x.avg_nota if x.avg_nota is not None else float('-inf'), reverse=True)
-    
+
     limit = 5
     cofeeshop = cofeeshop[:limit]
+
+    favoritos = Favorite3.objects.filter(usuario=request.user)
+
+    context = {
+        'media': cofeeshop,
+        'cafeterias': cafeterias,
+        'recommended_cafeterias': recommended_cafeterias,
+        'favoritos': favoritos,
+    }
+
+    return render(request, 'menu.html', context)
+
+def busca(request):
+    cafeterias = Cadastro.objects.all()
+    # Obtenha as tags do usuário logado
+    user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True) 
+
+    recommended_cafeterias = list(Cadastro.objects.filter(
+        nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
+    ).distinct())
+
+
+    if len(recommended_cafeterias) > 5:
+        recommended_cafeterias = random.sample(recommended_cafeterias, 5)
+
 
     context = {
         'cafeterias': cafeterias,
         'recommended_cafeterias': recommended_cafeterias,
-        'media': cofeeshop,
     }
-    
-    return render(request, 'menu.html', context)
 
+    return render(request, 'busca.html', context) 
 
 def login(request):
     if request.method == "GET":
