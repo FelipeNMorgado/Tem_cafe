@@ -72,12 +72,20 @@ def perfil(request, nome_cafeteria):
         avaliado = nome_cafeteria
         nota = int(request.POST.get('rate'))
         Avaliacao3.objects.create(avaliador=avaliador, avaliado=avaliado, nota=nota, user=request.user)
+        
+        avaliacoes_cafe = Avaliacao3.objects.filter(avaliado=nome_cafeteria)
+        media = avaliacoes_cafe.aggregate(avg_nota=Avg('nota'))['avg_nota']
+        media = round(media, 1) if media is not None else None
+        
         return JsonResponse({'status': 'success'})
     else:
         cafeteria = get_object_or_404(Cadastro2, nome_loja=nome_cafeteria)
         tags = TagCafeteria3.objects.filter(cafeteria=cafeteria.nome_loja)
         favorited = Favorite3.objects.filter(usuario=request.user.username, cafeteria=nome_cafeteria, user_id=request.user).exists()
-        return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags, 'favorited': favorited})
+        avaliacoes_cafe = Avaliacao3.objects.filter(avaliado=nome_cafeteria)
+        media = avaliacoes_cafe.aggregate(avg_nota=Avg('nota'))['avg_nota']
+        media = round(media, 1) if media is not None else None
+        return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags, 'favorited': favorited, 'media': media})
 
 @login_required
 @csrf_exempt
