@@ -191,53 +191,6 @@
             Avaliação enviada com sucesso!
         </div>
         
-          <script>
-            document.getElementById("avaliacaoForm").addEventListener('submit', function(event) {
-                event.preventDefault(); // Impede o envio do formulário padrão
-                enviarAvaliacao(); // Função para enviar a avaliação via AJAX
-            });
-        
-            function enviarAvaliacao() {
-                var formData = new FormData(document.getElementById("avaliacaoForm")); // Obtém os dados do formulário
-        
-                // Envia os dados via AJAX usando Fetch API
-                
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json(); // Retorna a resposta como JSON se for bem-sucedida
-                    } else {
-                        throw new Error("Erro ao enviar avaliação"); // Lança um erro se a resposta não for bem-sucedida
-                    }
-                })
-                .then(data => {
-                    if (data.status === "success") {
-                        // Exibe o pop-up de sucesso
-                        mostrarPopup("Avaliação enviada com sucesso!", "popup");
-                        document.getElementById("avaliado").value = ""; // Limpa o campo de texto 'avaliado'
-                        document.getElementById("rating_1").checked = false; // Desmarca a opção de avaliação
-                    } else {
-                        // Exibe um pop-up de erro informando que o usuário não foi encontrado
-                        mostrarPopup("Usuário não encontrado", "erroPopup");
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error); // Exibe o erro no console
-                    mostrarPopup("Erro ao enviar avaliação. Por favor, tente novamente.", "erroPopup"); // Exibe mensagem de erro genérica
-                });
-            }
-        
-            function mostrarPopup(mensagem, idPopup) {
-                var popup = document.getElementById(idPopup);
-                popup.innerText = mensagem;
-                popup.style.display = "block";
-                setTimeout(function() {
-                    popup.style.display = "none";
-                }, 1000); // Oculta o pop-up após 1 segundo
-            }
-        </script>
-
-
             <hr>
             <p class="text-start">Endereço</p>
             <p class="text-start fs-6">{{ cafeteria.endereco }}</p>
