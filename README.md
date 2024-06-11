@@ -81,7 +81,7 @@
 </details>
 
 <details>
-<summary> <h1>S2</h1></summary>
+<summary> <h1>Sr2</h1></summary>
 
 <details>
 <summary><h3>Diagramas de atividades:</h3></summary>
@@ -94,6 +94,8 @@
 <div align="center">
   <h3> Quadro do Jira </h3> 
   <img src="https://github.com/FelipeNMorgado/Tem_cafe/blob/main/Ctem_cafe/static/image.png">
+ <h3> Backlog do Jira </h3> 
+  <img src="https://github.com/FelipeNMorgado/Tem_cafe/blob/main/Ctem_cafe/static/image-backlog.png">
 </div>
  
 </details>
