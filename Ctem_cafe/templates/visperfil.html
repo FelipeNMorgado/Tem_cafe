@@ -486,7 +486,7 @@
                         &#9734; <!-- Estrela vazia -->
                     {% endif %}
                     {% if media %}
-                        ({{ media }})
+                        ({{ media }}) ({{ num_avaliacoes }} avaliações) 
                     {% else %}
                         N/A
                     {% endif %}
@@ -506,11 +506,11 @@
                 </div>
             {% endfor %}
 
-            {% if user.is_staff %}
+            
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Adicionar +
                 </button>
-            {% endif %}
+           
         </div>
 
         <!-- Modal -->
