@@ -301,7 +301,7 @@
   </div>
   
   <div class="grid m-3">
-    <h1 style="color: white;">Meus Favoritos :</h1>
+    <h2 style="color: white; padding-left: 3%;">Meus Favoritos :</h2>
     <div class="horizontal overflow-auto">
       <div class="container-fluid py-2">
         <div class="d-flex flex-row flex-nowrap overflow-auto">
@@ -327,45 +327,49 @@
   <div class="content-container-final d-flex justify-content-between col-md-12 grid m-3">
     <div class="Recomend-content col-md-4" style="margin-right: -15px;"> <!-- Adicione margem negativa -->
         <div class="Recomend">
-            <h1 style="color: white;">Recomendados</h1> 
+            <h2 style="color: white; padding-left: 9%;">Recomendados</h2> 
         </div>
         <div class="row">
             <div class="col-dm-12 mb-4 mb-sm-2">
-                <div class="card-alta">
+              {% for recomendado in recommended_cafeterias %}
+                <div class="card-alta m-2" style="max-height: 150px;">
                     <div class="card-body d-flex p-4">
                         <div class="circle-img conteudo"> <!-- Adicionando a classe "conteudo" aqui -->
-                            <img src="https://itaupowershopping.com.br/cont/uploads/2023/02/starbucks-1-1-1-1.jpg">
+                          <img src="{{ recomendado.arq }}" alt="{{ recomendado.nome_loja }}" style="width: 100px; height: 100px;">
                         </div>
                         <div class="body-conteuto d-flex flex-column p-3 ">
                             <div>
                                 <div class="d-flex flex-column">
-                                    <h3 class="card-text">Cafe nome</h3>
-                                    <p>Avaliação : </p>
+                                    <h3 class="card-text"><a href="{% url 'perfil' recomendado.nome_loja %}" id="recomendados">{{ recomendado.nome_loja }}</a></h3>
+                                    <p>Avaliação: {{ recomendado.avg_nota }} ({{ recomendado.num_avaliacoes }} avaliações)</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>     
         </div>
     </div>
-  
+
     <div id="map" class="col-md-4" style="height: 250px;width: 350px ; border-radius: 10px; margin-top:4.2%;"></div>
     
     <div class="Alta-content col-md-4" style="margin-right: 20px;"> <!-- Adicione margem negativa -->
+      
         <div class="Alta">
-            <h1 style="color: white;">Em Alta</h1>
+            <h2 style="color: white;">Cafeterias em Alta</h2>
+          {% for alta in media %} 
             <div class="row">
-                <div class="col-12 mb-3 mb-sm-0">
+                <div class="col-12 mb-1 mb-sm-0">
                     <div class="card-alta">
-                        <div class="card-body d-flex p-4">
+                        <div class="card-body d-flex p-3">
                             <div class="circle-img conteudo"> <!-- Adicionando a classe "conteudo" aqui -->
-                                <img src="https://itaupowershopping.com.br/cont/uploads/2023/02/starbucks-1-1-1-1.jpg">
+                              <img src="{{ alta.arq }}" alt="{{ alta.nome_loja }}" style="width: 100px; height: 100px;">
                             </div>
                             <div class="body-conteuto d-flex flex-column p-3 ">
                                 <div>
                                     <div class="d-flex">
-                                        <h3 class="card-text">Cafe nome</h3>
+                                        <h3 class="card-text">{{ alta.nome_loja }}</h3>
                                         <div class="favorite ml-4">
                                             <form action="{% url 'favorited_coffeeshop' %}" method="POST" class="ui form">
                                                 {% csrf_token %}
@@ -379,8 +383,8 @@
                                         </div>
                                     </div>
                                     <div class="conteudo"> <!-- Adicionando a classe "conteudo" aqui -->
-                                        <p> Endereço: </p>
-                                        <p> Avaliação: </p>
+                                        <p> Endereço: {{ alta.endereco }}, {{ alta.complemento }} - {{  alta.bairro }}, {{ alta.cep }} </p>
+                                        <p> Avaliação: {{ alta.avg_nota }} ({{ alta.num_avaliacoes }} avaliações) </p>
                                     </div>
                                 </div>
                             </div>
@@ -389,6 +393,7 @@
                 </div>     
             </div>
         </div>
+      {% endfor %}
     </div>
 </div>
 

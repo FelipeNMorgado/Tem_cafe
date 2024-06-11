@@ -76,16 +76,20 @@ def perfil(request, nome_cafeteria):
         avaliacoes_cafe = Avaliacao3.objects.filter(avaliado=nome_cafeteria)
         media = avaliacoes_cafe.aggregate(avg_nota=Avg('nota'))['avg_nota']
         media = round(media, 1) if media is not None else None
+        num_avaliacoes = avaliacoes_cafe.count()
         
-        return JsonResponse({'status': 'success'})
+        return JsonResponse({'status': 'success', 'media': media, 'num_avaliacoes': num_avaliacoes})
     else:
         cafeteria = get_object_or_404(Cadastro2, nome_loja=nome_cafeteria)
         tags = TagCafeteria3.objects.filter(cafeteria=cafeteria.nome_loja)
         favorited = Favorite3.objects.filter(usuario=request.user.username, cafeteria=nome_cafeteria, user_id=request.user).exists()
+        
         avaliacoes_cafe = Avaliacao3.objects.filter(avaliado=nome_cafeteria)
         media = avaliacoes_cafe.aggregate(avg_nota=Avg('nota'))['avg_nota']
         media = round(media, 1) if media is not None else None
-        return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags, 'favorited': favorited, 'media': media})
+        num_avaliacoes = avaliacoes_cafe.count()
+        
+        return render(request, 'visperfil.html', {'cafeteria': cafeteria, 'tags': tags, 'favorited': favorited, 'media': media, 'num_avaliacoes': num_avaliacoes})
 
 @login_required
 @csrf_exempt
@@ -118,6 +122,7 @@ def remove_tag(request):
             return JsonResponse({'success': False, 'message': 'Tag não encontrada'})
     return JsonResponse({'success': False, 'message': 'Requisição inválida'})
 
+
 def menu(request):
     cafeterias = Cadastro2.objects.all()
     user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True)
@@ -125,7 +130,7 @@ def menu(request):
 
     cafeterias = Cadastro2.objects.all()
     cafes_json = serialize('json', cafeterias, fields=('nome_loja', 'endereco', 'complemento', 'cidade', 'bairro', 'estado', 'cep'))
-    
+
     recommended_cafeterias = list(Cadastro2.objects.filter(
         nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
     ).distinct())
@@ -147,12 +152,15 @@ def menu(request):
     cofeeshop = cofeeshop[:limit]
     noticias = noticias[:limit]
 
-    favoritos = Favorite3.objects.filter(usuario=request.user)
+    for cafe in recommended_cafeterias:
+        avaliacoes_cafe = Avaliacao3.objects.filter(avaliado=cafe.nome_loja)
+        cafe.num_avaliacoes = avaliacoes_cafe.count()
+        media = avaliacoes_cafe.aggregate(avg_nota=Avg('nota'))['avg_nota']
+        cafe.avg_nota = round(media, 1) if media is not None else None
 
-    # Obter os detalhes das cafeterias favoritas
+    favoritos = Favorite3.objects.filter(usuario=request.user)
     favoritas_detalhes = Cadastro2.objects.filter(nome_loja__in=[fav.cafeteria for fav in favoritos])
 
-    # Criar uma lista de dicionários contendo os detalhes necessários para o template
     favoritos_detalhes = [
         {
             'favorito': fav,
@@ -238,11 +246,14 @@ def mapa(request):
 
 
     
+@login_required
 def perfil_usuario(request):
-    user_tags = TagUsuario.objects.filter(usuario=request.user)
+    user_tags = TagUsuario.objects.filter(user_id=request.user)
+    favorite_cafeterias = Favorite3.objects.filter(user_id=request.user)
     return render(request, 'userperfil.html', {
         'username': request.user.username,
-        'user_tags': user_tags
+        'user_tags': user_tags,
+        'favorite_cafeterias': favorite_cafeterias,
     })
 
 @login_required
