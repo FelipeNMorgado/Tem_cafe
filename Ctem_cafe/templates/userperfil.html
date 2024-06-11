@@ -1,205 +1,260 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'visperfil2.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Perfil Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #A6606D, #C49A7A);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .navbar {
+            background-color: burlywood;
+        }
+        .navbar .nav-link {
+            color: burlywood;
+        }
+        .navbar .nav-link:hover {
+            color: #fff;
+        }
+        .navbar-brand img {
+            width: 100px;
+        }
+        .circle {
+            width: 150px;
+            height: 150px;
+            background-color: #ccc;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .circle img {
+            width: 100%;
+            height: auto;
+        }
+        .container {
+            text-align: center;
+        }
+        .col {
+            padding: 20px;
+        }
+        .cardapio img {
+            width: 100%;
+        }
+        .tag-item {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 5px 10px;
+            margin: 5px;
+            position: relative;
+        }
+        .tag-item h6 {
+            margin: 0;
+        }
+        .remove-tag-button {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+        }
+        .modal-content {
+            color: #333;
+        }
+        .modal-header, .modal-footer {
+            background-color: #f8f9fa;
+        }
+        .modal-body label {
+            color: #333;
+        }
+    </style>
 </head>
-
 <body>
-  {% block content %}
-    <!-- ADICIONANDO BARRA DE NAVEGAÇÃO-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary mt-0">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#"><img src="{% static 'Logo.png' %}" class="w-25 p-3"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" style="color: burlywood;" aria-current="page" href="{% url 'menu' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" style="color: burlywood;" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" style="color: burlywood;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu" style="background-color: burlywood;">
-                  <li><a class="dropdown-item" style="color: #261B11;" href="#">Action</a></li>
-                  <li><a class="dropdown-item" style="color: #261B11;" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" style="color: #261B11;" href="#">Something else here</a></li>
+            <a class="navbar-brand" href="#"><img src="{% static 'Logo.png' %}" class="w-25 p-3"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" style="color: burlywood;" aria-current="page" href="{% url 'menu' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: burlywood;" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="color: burlywood;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: burlywood;">
+                            <li><a class="dropdown-item" style="color: #261B11;" href="#">Action</a></li>
+                            <li><a class="dropdown-item" style="color: #261B11;" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" style="color: #261B11;" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" style="color: burlywood;" aria-disabled="true">Disabled</a>
+                    </li>
                 </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" style="color: burlywood;" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
         </div>
-      </nav>
-    
-      <div class="container text-center fs-2">
+    </nav>
+
+    <div class="container text-center fs-2">
         <div class="row align-items-start">
-          <div class="col border">
-            <br>
-            <div class="circle">
-                <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/7407996-user-icon-person-icon-client-symbol-login-head-sign-icon-design-vetor.jpg">
-            </div>
-            <br><br>
-
-            <p class="text-start te position-relative width:100px">Cardápio:</p>
-            
-            <div class="cardapio">
-                <img src="https://marketplace.canva.com/EAE3yDrBBVU/1/0/1131w/canva-card%C3%A1pio-de-caf%C3%A9s-para-cafeteria-moderno-marrom-AmpHQUqP6mg.jpg">
-            </div>
-            <br><br>
-          </div>
-          
-          <div class="col border">
-            <div class="d-flex align-items-center">
-              <p class="text-start me-3">Usuario: {{ username }}</p>
-              <div class="con-like">
-              </div>
-            </div>
-            
-            <hr>
-            <p class="text-start">História</p>
-            <p class="text-start fs-6">{{ cafeteria.historia }}</p>
-            <hr>
-            <p class="text-start">Tags</p>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-              {% for tag in user_tags %}
-                <div class="tag-item position-relative">
-                    <h6>{{tag.tag_name}}</h6>
-                    <button type="button" class="btn btn-danger btn-sm remove-tag-button position-absolute top-0 end-0" data-tag-id="{{ tag.id }}">X</button>
+            <div class="col border">
+                <br>
+                <div class="circle">
+                    <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/7407996-user-icon-person-icon-client-symbol-login-head-sign-icon-design-vetor.jpg">
                 </div>
-              {% endfor %}
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Adicionar +
-              </button>
+                <br><br>
+                <p class="text-start te position-relative width:100px">Nome: {{ username }}</p>
+                <br><br>
+            </div>
 
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">Nova Tag:</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="col-md-4">
-                        <label for="inputState" class="form-label fs-5">Opções:</label>
-                        <select id="inputState" class="form-select" name="inputState">
-                          <option selected>Escolha...</option>
-                          <option>Trabalho</option>
-                          <option>Estudo</option>
-                          <option>Business</option>
-                          <option>Pet Friendly</option>
-                          <option>Café Arábica</option>
-                          <option>Café Catuaí</option>
-                          <option>Café Robusta</option>
-                          <option>Café Geisha</option>
-                          <option>Café Kona</option>
-                        </select>
-                        <button type="button" class="btn btn-primary mt-3" id="saveTagButton">Salvar</button>
+            <div class="col border">
+                <p class="text-start">História</p>
+                <p class="text-start fs-6">{{ user.historia }}</p>
+                <hr>
+                <p class="text-start">Tags</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    {% for tag in user_tags %}
+                        <div class="tag-item position-relative">
+                            <h6>{{ tag.tag_name }}</h6>
+                            <button type="button" class="btn btn-danger btn-sm remove-tag-button position-absolute top-0 end-0" data-tag-id="{{ tag.id }}">X</button>
+                        </div>
+                    {% endfor %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Adicionar +
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                   
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Nova Tag:</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="col-md-4">
+                                      <label for="inputState" class="form-label fs-5">Opções:</label>
+                                      <select id="inputState" class="form-select" name="inputState">
+                                          <option selected>Escolha...</option>
+                                          <option>Trabalho</option>
+                                          <option>Estudo</option>
+                                          <option>Business</option>
+                                          <option>Pet Friendly</option>
+                                          <option>Café Arábica</option>
+                                          <option>Café Catuaí</option>
+                                          <option>Café Robusta</option>
+                                          <option>Café Geisha</option>
+                                          <option>Café Kona</option>
+                                      </select>
+                                      <button type="button" class="btn btn-primary mt-3" id="saveTagButton">Salvar</button>
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    </div>
                   </div>
-                </div>
+
+                  <!-- Adicione o token CSRF necessário para o Django -->
+                  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                  <script>
+                      document.getElementById('saveTagButton').addEventListener('click', function() {
+                          const selectedTag = document.getElementById('inputState').value;
+
+                          if (selectedTag === "Escolha...") {
+                              alert("Por favor, selecione uma tag.");
+                              return;
+                          }
+
+                          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                          fetch("{% url 'add_tag_usuario' %}", {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json',
+                                  'X-CSRFToken': csrfToken
+                              },
+                              body: JSON.stringify({
+                                  tag: selectedTag
+                              })
+                          })
+                          .then(response => response.json())
+                          .then(data => {
+                              if (data.success) {
+                                  alert("Tag adicionada com sucesso!");
+                                  location.reload(); // recarrega a página para mostrar a tag adicionada
+                              } else {
+                                  alert("Houve um erro ao adicionar a tag.");
+                              }
+                          });
+                      });
+
+                      document.querySelectorAll('.remove-tag-button').forEach(button => {
+                          button.addEventListener('click', function() {
+                              const tagId = this.getAttribute('data-tag-id');
+                              const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                              fetch("{% url 'remove_tag_usuario' %}", {
+                                  method: 'POST',
+                                  headers: {
+                                      'Content-Type': 'application/json',
+                                      'X-CSRFToken': csrfToken
+                                  },
+                                  body: JSON.stringify({ tag_id: tagId })
+                              })
+                              .then(response => response.json())
+                              .then(data => {
+                                  if (data.success) {
+                                      alert("Tag removida com sucesso!");
+                                      location.reload(); // recarrega a página para atualizar as tags
+                                  } else {
+                                      alert("Houve um erro ao remover a tag.");
+                                  }
+                              });
+                          });
+                      });
+                  </script>
               </div>
-
-              <!-- Adicione o token CSRF necessário para o Django -->
-              <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-              <script>
-                document.getElementById('saveTagButton').addEventListener('click', function() {
-                  const selectedTag = document.getElementById('inputState').value;
-              
-                  if (selectedTag === "Escolha...") {
-                    alert("Por favor, selecione uma tag.");
-                    return;
-                  }
-              
-                  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-              
-                  fetch("{% url 'add_tag_usuario' %}", {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'X-CSRFToken': csrfToken
-                    },
-                    body: JSON.stringify({
-                      tag: selectedTag
-                    })
-                  })
-                  .then(response => response.json())
-                  .then(data => {
-                    if (data.success) {
-                      alert("Tag adicionada com sucesso!");
-                      location.reload(); // recarrega a página para mostrar a tag adicionada
-                    } else {
-                      alert("Houve um erro ao adicionar a tag.");
-                    }
-                  });
-                });
-
-                document.querySelectorAll('.remove-tag-button').forEach(button => {
-                  button.addEventListener('click', function() {
-                    const tagId = this.getAttribute('data-tag-id');
-                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-                    fetch("{% url 'remove_tag_usuario' %}", {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrfToken
-                      },
-                      body: JSON.stringify({ tag_id: tagId })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                      if (data.success) {
-                        alert("Tag removida com sucesso!");
-                        location.reload(); // recarrega a página para atualizar as tags
-                      } else {
-                        alert("Houve um erro ao remover a tag.");
-                      }
-                    });
-                  });
-                });
-              </script>
-            </div>
-            <hr>
-            
-
-          <div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 128, 0, 0.7); color: #fff; padding: 20px; border-radius: 5px; z-index: 9999;">
-            Avaliação enviada com sucesso!
-        </div>
-        
-            <hr>
-            <p class="text-start">Endereço</p>
-            <p class="text-start fs-6">{{ cafeteria.endereco }}</p>
-            <img src="https://tm.ibxk.com.br/2021/12/20/20095730932072.jpg?ims=1200x675" class="w-75 p-3">
+              <hr>
+              <p class="text-start">Cafeterias Favoritas</p>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                  {% for favorite in favorite_cafeterias %}
+                      <div class="tag-item position-relative">
+                          <h6>{{ favorite.cafeteria }}</h6>
+                      </div>
+                  {% endfor %}
+              </div>
           </div>
-        </div>
       </div>
+  </div>
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  {% endblock content %}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

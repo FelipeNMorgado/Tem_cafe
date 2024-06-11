@@ -246,11 +246,14 @@ def mapa(request):
 
 
     
+@login_required
 def perfil_usuario(request):
-    user_tags = TagUsuario.objects.filter(usuario=request.user)
+    user_tags = TagUsuario.objects.filter(user_id=request.user)
+    favorite_cafeterias = Favorite3.objects.filter(user_id=request.user)
     return render(request, 'userperfil.html', {
         'username': request.user.username,
-        'user_tags': user_tags
+        'user_tags': user_tags,
+        'favorite_cafeterias': favorite_cafeterias,
     })
 
 @login_required
