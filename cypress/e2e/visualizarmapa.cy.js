@@ -40,6 +40,5 @@ describe('teste visualizarmapa', () => {
         cy.get('#inputEmail4').type('Tonho')
         cy.get('#inputPassword4').type('12345')
         cy.get('[type="submit"]').click()
-        cy.get('[aria-label="Diminuir o zoom"]').click()
     })
 })
