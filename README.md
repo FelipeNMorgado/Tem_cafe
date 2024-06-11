@@ -80,6 +80,23 @@
   <img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/128396955/878d8b70-4e2e-4278-b541-6b9fcca75634"width="1000px">
 </details>
 
+<details>
+<summary> <h1>S2</h1></summary>
+
+<details>
+<summary><h3>Diagramas de atividades:</h3></summary>
+ <ul>
+  <li><a href ="https://drive.google.com/file/d/1SUJpUWbX0W1tdbn1DEVQKGIAzLmHi-ZL/view?usp=drive_link">Diagrama Avalição</a></li>
+  <li><a href ="https://drive.google.com/file/d/1PG_0uQl35dXUxnKxWZqNO44HXcNwez1M/view?usp=drive_link">Diagrama Edição de Perfil</a></li>
+  <li><a href ="https://drive.google.com/file/d/1p0rntMsEvBeWFq690GdKhfi6KGzg2WHD/view?usp=drive_link">Diagrama Edição de Cafeteira</a></li>
+  </ul>
+</details>
+<div align="center">
+  <img src="https://media.discordapp.net/attachments/1232770645176094740/1233184065004503102/image.png?ex=662c2ba8&is=662ada28&hm=79b64f7003f37ce610eb708a7939a87e003e9efb8a01fee921f0fb0d551139dc&=&format=webp&quality=lossless&width=1087&height=537"width="1000px">
+  <img src="https://media.discordapp.net/attachments/1232770645176094740/1233184149737832521/image.png?ex=662c2bbc&is=662ada3c&hm=366c65c955ccbed2ed7ea1761d08985fa87d7dc0dc8038d24860efd2cfeb3e1a&=&format=webp&quality=lossless&width=825&height=418" width="1000px">
+</div>
+ 
+</details>
 
 
 # Team👩‍👩‍👦‍👦
