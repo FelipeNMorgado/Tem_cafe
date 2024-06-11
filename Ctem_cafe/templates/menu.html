@@ -126,9 +126,10 @@
     <!-- Filtro -->
       <h4>Suas Cafeterias Favoritas</h4> 
 
-      {% for fav in favoritos %}
+      {% for item in favoritos_detalhes %}
           <div>
-            <h5><a href="{% url 'perfil' fav.cafeteria %}" id="recomendados">{{ fav.cafeteria }}</a></h5>
+              <h5><a href="{% url 'perfil' item.favorito.cafeteria %}" id="recomendados">{{ item.favorito.cafeteria }}</a></h5>
+              <img src="{{ item.cafeteria.arq }}" alt="{{ item.cafeteria.nome_loja }}" style="width: 100px; height: auto;">
           </div>
       {% endfor %}
 

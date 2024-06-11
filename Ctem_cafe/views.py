@@ -120,16 +120,11 @@ def remove_tag(request):
 
 def menu(request):
     cafeterias = Cadastro2.objects.all()
-    # Obtenha as tags do usuário logado
     user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True)
-
     
-    # Obtenha as cafeterias que têm pelo menos uma tag em comum com o usuário
     recommended_cafeterias = list(Cadastro2.objects.filter(
-    nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
-
+        nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
     ).distinct())
-
 
     if len(recommended_cafeterias) > 5:
         recommended_cafeterias = random.sample(recommended_cafeterias, 5)
@@ -138,7 +133,7 @@ def menu(request):
 
     for cafe in cofeeshop:
         avaliacoes_cafe = Avaliacao3.objects.filter(avaliado=cafe.nome_loja)
-        cafe.num_avaliacoes = avaliacoes_cafe.count()  # Contagem das avaliações recebidas
+        cafe.num_avaliacoes = avaliacoes_cafe.count()
         media = avaliacoes_cafe.aggregate(avg_nota=Avg('nota'))['avg_nota']
         cafe.avg_nota = round(media, 1) if media is not None else None
 
@@ -149,11 +144,23 @@ def menu(request):
 
     favoritos = Favorite3.objects.filter(usuario=request.user)
 
+    # Obter os detalhes das cafeterias favoritas
+    favoritas_detalhes = Cadastro2.objects.filter(nome_loja__in=[fav.cafeteria for fav in favoritos])
+
+    # Criar uma lista de dicionários contendo os detalhes necessários para o template
+    favoritos_detalhes = [
+        {
+            'favorito': fav,
+            'cafeteria': next(cafe for cafe in favoritas_detalhes if cafe.nome_loja == fav.cafeteria)
+        }
+        for fav in favoritos
+    ]
+
     context = {
         'media': cofeeshop,
         'cafeterias': cafeterias,
         'recommended_cafeterias': recommended_cafeterias,
-        'favoritos': favoritos,
+        'favoritos_detalhes': favoritos_detalhes,
     }
 
     return render(request, 'menu.html', context)
