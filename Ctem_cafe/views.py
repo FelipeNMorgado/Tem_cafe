@@ -121,6 +121,7 @@ def remove_tag(request):
 def menu(request):
     cafeterias = Cadastro2.objects.all()
     user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True)
+    noticias = Noticias.objects.all()
     
     recommended_cafeterias = list(Cadastro2.objects.filter(
         nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
@@ -141,6 +142,7 @@ def menu(request):
 
     limit = 5
     cofeeshop = cofeeshop[:limit]
+    noticias = noticias[:limit]
 
     favoritos = Favorite3.objects.filter(usuario=request.user)
 
@@ -161,6 +163,7 @@ def menu(request):
         'cafeterias': cafeterias,
         'recommended_cafeterias': recommended_cafeterias,
         'favoritos_detalhes': favoritos_detalhes,
+        'noticias': noticias
     }
 
     return render(request, 'menu.html', context)
