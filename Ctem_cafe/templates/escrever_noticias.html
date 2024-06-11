@@ -85,29 +85,43 @@
 <body>
 
  <!-- BARRA DE NAVEGAÇÃO -->
-<header>
+ <header>
   <nav class="navbar">
+    {% if not user.is_staff %}
       <div class="logo">
-          <a href="{% url 'menu'%}"><img  id="logo"src="{% static 'LOGO NOVA 7.png'%}" alt="Logo"></a>
+          <a href="{% url 'menu' %}"><img id="logo" src="{% static 'LOGO NOVA 7.png' %}" alt="Logo"></a>
       </div>
-      <div class="group-item ">
+    {%else%}
+      <div class="logo">
+        <a href="#"><img id="logo" src="{% static 'LOGO NOVA 7.png' %}" alt="Logo"></a>
+      </div>
+    {% endif %}
+      <div class="group-item">
         <div class="item">
+          {% if not user.is_staff %}
           <a href="{% url 'busca' %}">Buscar</a>
+          {% endif %}
         </div>
         <div class="item">
-          <a href="{% url 'noticias'%}">Noticias</a>
+          {% if not user.is_staff %}
+          <a href="{% url 'noticias' %}">Noticias</a>
+          {% endif %}
         </div>
         <div class="item">
-          <a href="{% url 'cadastro'%}">Abra Seu Negocio</a>
+          <a href="{% url 'cadastro_cafeteria' %}">Abra Seu Negocio</a>
         </div>
-    </div>
-    <div class="perfil dropdown-header p-1">
-      <a href="{% url 'login' %}" class="m-2">Log Out</a>
-      <a href="{% url 'perfil_usuario' %}" id="imgDropdown" class="nav-icon pe-md-0">
-        Perfil
-        <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">                            
-      </a>
-    </div>
+      </div>
+      <div class="perfil dropdown-header">
+          <a href="{% url 'login' %}" class="m-2">Log Out</a>
+          {% if not user.is_staff %}
+              <a href="{% url 'perfil_usuario' %}" class="nav-icon pe-md-0">
+                  Perfil
+                  <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">
+              </a>
+          {% else %}
+              <img src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">
+          {% endif %}
+      </div>
   </nav>
 </header>
 

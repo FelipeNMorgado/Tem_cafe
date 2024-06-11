@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -374,31 +375,45 @@
 </head>
 <body>
 
-  <header>
-    <nav class="navbar">
-        <div class="logo">
-            <a href="{% url 'menu' %}"><img id="logo" src="logo.png" alt="Logo"></a>
-        </div>
-        <div class="group-item">
-          <div class="item">
-            <a href="{% url 'busca' %}">Buscar</a>
-          </div>
-          <div class="item">
-            <a href="{% url 'noticias' %}">Noticias</a>
-          </div>
-          <div class="item">
-            <a href="{% url 'cadastro_cafeteria' %}">Abra Seu Negocio</a>
-          </div>
-        </div>
-        <div class="perfil dropdown-header">
-            <a href="{% url 'login' %}" class="m-2">Log Out</a>
-            <a href="{% url 'perfil_usuario' %}" class="nav-icon pe-md-0">
-                Perfil
-                <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">
-            </a>
-        </div>
-    </nav>
-  </header>
+    <header>
+        <nav class="navbar">
+          {% if not user.is_staff %}
+            <div class="logo">
+                <a href="{% url 'menu' %}"><img id="logo" src="{% static 'LOGO NOVA 7.png' %}" alt="Logo"></a>
+            </div>
+          {%else%}
+            <div class="logo">
+              <a href="#"><img id="logo" src="{% static 'LOGO NOVA 7.png' %}" alt="Logo"></a>
+            </div>
+          {% endif %}
+            <div class="group-item">
+              <div class="item">
+                {% if not user.is_staff %}
+                <a href="{% url 'busca' %}">Buscar</a>
+                {% endif %}
+              </div>
+              <div class="item">
+                {% if not user.is_staff %}
+                <a href="{% url 'noticias' %}">Noticias</a>
+                {% endif %}
+              </div>
+              <div class="item">
+                <a href="{% url 'cadastro_cafeteria' %}">Abra Seu Negocio</a>
+              </div>
+            </div>
+            <div class="perfil dropdown-header">
+                <a href="{% url 'login' %}" class="m-2">Log Out</a>
+                {% if not user.is_staff %}
+                    <a href="{% url 'perfil_usuario' %}" class="nav-icon pe-md-0">
+                        Perfil
+                        <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">
+                    </a>
+                {% else %}
+                    <img src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">
+                {% endif %}
+            </div>
+        </nav>
+      </header>
 
     
   <div class="container" style="max-width: 100%; margin-left: 0;">
@@ -434,6 +449,7 @@
             <div class="info">
                 <p>Endereço:<br>
                     {{ cafeteria.endereco }}, {{ cafeteria.complemento }} - {{ cafeteria.bairro }}, {{ cafeteria.cep }}</p>
+                {% if user.is_staff %}
                 <p><a href="{% url 'escrever_noticias'%}">
                     <button type="submit" class="btn btn-primary">Escrever noticias</button>
                 </a>
@@ -441,6 +457,7 @@
                   <button type="submit" class="btn btn-primary">Editar perfil</button>
               </a>
                 </p>
+                {% endif %}
                 <p>Avaliação:<br>
                     <span class="avaliacao-rating">
                     {% if media >= 1 %}
@@ -488,9 +505,12 @@
                     <button type="button" class="btn btn-danger btn-sm remove-tag-button" data-tag-id="{{ tag.id }}">X</button>
                 </div>
             {% endfor %}
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Adicionar +
-            </button>
+
+            {% if user.is_staff %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Adicionar +
+                </button>
+            {% endif %}
         </div>
 
         <!-- Modal -->
@@ -611,9 +631,11 @@
                     <input type='radio' hidden name='rate' id='rating_1' data-idx='4' value='1' required>
                     <label for='rating_1'></label>
                 </div>
+                {% if not user.is_staff %}
                 <div class="wrapper">
                     <button type="submit" class="enviar-avaliacao"><span>Enviar</span></button>
                 </div>
+                {% endif %}
             </form>
 
             <div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 128, 0, 0.7); color: #fff; padding: 20px; border-radius: 5px; z-index: 9999;">
