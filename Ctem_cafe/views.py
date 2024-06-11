@@ -126,7 +126,7 @@ def remove_tag(request):
 def menu(request):
     cafeterias = Cadastro2.objects.all()
     user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True)
-    noticias = Noticias.objects.all()
+    noticias = list(Noticias.objects.all())
 
     cafeterias = Cadastro2.objects.all()
     cafes_json = serialize('json', cafeterias, fields=('nome_loja', 'endereco', 'complemento', 'cidade', 'bairro', 'estado', 'cep'))
@@ -137,6 +137,9 @@ def menu(request):
 
     if len(recommended_cafeterias) > 5:
         recommended_cafeterias = random.sample(recommended_cafeterias, 5)
+
+    if len(noticias) > 5:
+        noticias = random.sample(noticias, 5)
 
     cofeeshop = Cadastro2.objects.all()
 

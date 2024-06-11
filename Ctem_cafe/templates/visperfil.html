@@ -500,17 +500,23 @@
         <h2>Tags</h2>
         <div class="tags">
             {% for tag in tags %}
-                <div class="tag-item">
-                    <h6>{{ tag.tag_name }}</h6>
-                    <button type="button" class="btn btn-danger btn-sm remove-tag-button" data-tag-id="{{ tag.id }}">X</button>
-                </div>
+                {% if user.is_staff %}
+                    <div class="tag-item">
+                        <h6>{{ tag.tag_name }}</h6>
+                        <button type="button" class="btn btn-danger btn-sm remove-tag-button" data-tag-id="{{ tag.id }}">X</button>
+                    </div>
+                {% else %}
+                    <div class="tag-item">
+                        <h6>{{ tag.tag_name }}</h6>
+                    </div>
+                {% endif %}
             {% endfor %}
 
-            
+            {% if user.is_staff %}
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Adicionar +
                 </button>
-           
+            {% endif %}
         </div>
 
         <!-- Modal -->
