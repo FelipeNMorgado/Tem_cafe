@@ -122,6 +122,9 @@ def menu(request):
     cafeterias = Cadastro2.objects.all()
     user_tags = TagUsuario.objects.filter(user_id=request.user).values_list('tag_name', flat=True)
     noticias = Noticias.objects.all()
+
+    cafeterias = Cadastro2.objects.all()
+    cafes_json = serialize('json', cafeterias, fields=('nome_loja', 'endereco', 'complemento', 'cidade', 'bairro', 'estado', 'cep'))
     
     recommended_cafeterias = list(Cadastro2.objects.filter(
         nome_loja__in=TagCafeteria3.objects.filter(tag_name__in=user_tags).values_list('cafeteria', flat=True)
@@ -162,6 +165,7 @@ def menu(request):
         'media': cofeeshop,
         'cafeterias': cafeterias,
         'recommended_cafeterias': recommended_cafeterias,
+         'cafes_json': cafes_json,
         'favoritos_detalhes': favoritos_detalhes,
         'noticias': noticias
     }
