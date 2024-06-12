@@ -94,6 +94,10 @@
   <li><a href ="https://drive.google.com/file/d/1p0rntMsEvBeWFq690GdKhfi6KGzg2WHD/view?usp=drive_link">Diagrama Edição de Cafeteira</a></li>
   </ul>
 </details>
+
+  ### Apresentação Lo-Fi:
+ + <a href ="https://youtu.be/1LIjJsXMPQY">Lo Fi</a>
+
 <div align="center">
   <h3> Quadro do Jira </h3> 
   <img src="https://github.com/FelipeNMorgado/Tem_cafe/blob/main/Ctem_cafe/static/image.png">
