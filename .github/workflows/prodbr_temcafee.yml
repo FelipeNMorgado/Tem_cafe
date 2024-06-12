@@ -36,9 +36,8 @@ jobs:
       
       - name: Cleaning testing files
         run: |
-          cd tem_cafe/
           rm .env
-          cd ..
+          
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
