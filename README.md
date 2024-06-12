@@ -94,10 +94,12 @@
   <li><a href ="https://drive.google.com/file/d/1p0rntMsEvBeWFq690GdKhfi6KGzg2WHD/view?usp=drive_link">Diagrama Edição de Cafeteira</a></li>
   </ul>
 </details>
-  ### Site:
- <a href =" https://temcafe.azurewebsites.net"> Site azure </a>
+
+  ### Site na Azure:
+ + <a href ="https://temcafe.azurewebsites.net">Site na Azure </a>
+ 
   ### Apresentação Lo-Fi:
- + <a href ="https://youtu.be/1LIjJsXMPQY">Lo Fi</a>
+ + <a href ="https://youtu.be/1LIjJsXMPQY">Lo-Fi</a>
 
 <div align="center">
   <h3> Quadro do Jira </h3> 
