@@ -354,17 +354,6 @@
                                 <div>
                                     <div class="d-flex">
                                         <h3 class="card-text">{{ alta.nome_loja }}</h3>
-                                        <div class="favorite ml-4">
-                                            <form action="{% url 'favorited_coffeeshop' %}" method="POST" class="ui form">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="post_id" value="{{ cafeteria.nome_loja }}">
-                                                {% if favorited %}
-                                                    <button type="submit" class="ui button positive no-bg"><span class="bigger">❤</span></button>
-                                                {% else %}
-                                                    <button type="submit" class="ui button negative no-bg"><span class="bigger">♡</span></button>
-                                                {% endif %}
-                                            </form>
-                                        </div>
                                     </div>
                                     <div class="conteudo"> <!-- Adicionando a classe "conteudo" aqui -->
                                         <p> Endereço: {{ alta.endereco }}, {{ alta.complemento }} - {{  alta.bairro }}, {{ alta.cep }} </p>
