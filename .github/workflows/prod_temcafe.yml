@@ -79,4 +79,4 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'TemCafe'
-          slot-name: 'Production'
+          slot-name: 'Production' 
