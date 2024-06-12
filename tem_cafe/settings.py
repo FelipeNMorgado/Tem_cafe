@@ -23,7 +23,7 @@ if NOT_PROD:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-else:
+else: 
     # Production settings
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
