@@ -95,6 +95,15 @@
   </ul>
 </details>
 
+  ### Screencast dos Testes Automatizados:
+  + Link aqui...
+
+  ### Screencast do CI/CD:
+  + Link aqui...
+
+  ### Screencast do site na Azure:
+  + Link aqui...
+  
   ### Site na Azure:
  + <a href ="https://temcafe.azurewebsites.net">Site na Azure </a>
  
