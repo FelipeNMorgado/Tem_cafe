@@ -45,6 +45,7 @@ else:
         }
     }
 
+
 # Application definition
 INSTALLED_APPS = [
     'Ctem_cafe.apps.CtemCafeConfig',  # Ensure the app name is correct
