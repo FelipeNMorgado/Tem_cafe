@@ -7,7 +7,7 @@ name: Build and deploy Python app to Azure Web App - TemCafe
 on:
   push:
     branches:
-      - prod
+      - prodbr
   workflow_dispatch:
 
 jobs:
