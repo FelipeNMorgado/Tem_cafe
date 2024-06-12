@@ -10,7 +10,7 @@ load_dotenv(BASE_DIR / '.env')
 
 # Determine the target environment
 TARGET_ENV = os.getenv('TARGET_ENV', 'development').lower()
-NOT_PROD = TARGET_ENV != 'production'
+NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 
 if NOT_PROD:
     # Development settings
