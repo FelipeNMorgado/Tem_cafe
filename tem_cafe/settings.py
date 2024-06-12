@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
 # Determine the target environment
-TARGET_ENV = os.getenv('TARGET_ENV', 'development').lower()
+TARGET_ENV = os.getenv('TARGET_ENV', 'dev').lower()
 NOT_PROD = TARGET_ENV != 'prod'
 
 if NOT_PROD:
