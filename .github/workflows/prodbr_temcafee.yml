@@ -87,6 +87,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'TemCafe'
+          app-name: 'TemCafee'
           slot-name: 'Production'
           
