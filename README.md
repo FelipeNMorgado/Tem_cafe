@@ -97,6 +97,7 @@
 <div align="center">
   <h3> Quadro do Jira </h3> 
   <img src="https://github.com/FelipeNMorgado/Tem_cafe/blob/main/Ctem_cafe/static/image.png">
+  <img src="https://github.com/FelipeNMorgado/Tem_cafe/assets/150074307/616d25e1-4b40-48cf-981f-a1f424e3b8be">
  <h3> Backlog do Jira </h3> 
   <img src="https://github.com/FelipeNMorgado/Tem_cafe/blob/main/Ctem_cafe/static/image-backlog.png">
 </div>
