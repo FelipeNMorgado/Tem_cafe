@@ -83,6 +83,9 @@
 <details>
 <summary> <h1>Sr2</h1></summary>
 
+ ### Pair Programming:
+ + <a href="https://docs.google.com/document/d/1JNJjZWX-re2abIERAAeIxPRrnGnuVNt5ClwBKMpjqKc/edit#heading=h.owlmmn8nicl2">Relatorio</a>
+
 <details>
 <summary><h3>Diagramas de atividades:</h3></summary>
  <ul>
