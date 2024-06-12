@@ -174,9 +174,6 @@
         color: white;
         margin-right: 17px;
     }
-
-
-
 </style>
 
 </head>
@@ -187,9 +184,8 @@
         <div class="progress-step" data-title="login_info"></div> <!-- Adicionando o ícone de marca de verificação -->
     </div>
  <form class="row justify-content-center form" method="post">   
-       
+        {% csrf_token %}
         <div class="form-step form-step-activate">
-            {% csrf_token %}
             <div class="title">
                 <h1 style="font-size: 18px;"> Cadastre-se</h1>
                 <h2 style="font-size: 14px;">Informações Pessoais</h2>
@@ -250,7 +246,7 @@
                     </div>
                     <div class="col-12 enviar">
                         <button type="button" class="btn btn-primary btn-prev">Voltar</button>
-                        <button type="submit" class="btn btn-primary ">Confirmar</button>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
                     </div>
                 </div>
     </form>
@@ -308,8 +304,6 @@ prevBtns.forEach(btn => {
 
 
 })
-
-
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1"></script>
