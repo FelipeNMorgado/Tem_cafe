@@ -57,36 +57,40 @@ jobs:
             !venv/
 
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
+deploy:
+  runs-on: ubuntu-latest
+  needs: build
+  environment:
+    name: 'Production'
+    url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+  permissions:
+    id-token: write # Isso é necessário para solicitar o JWT
 
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: python-app
+  steps:
+    - name: Baixar artefato do job de build
+      uses: actions/download-artifact@v3
+      with:
+        name: python-app
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
+    - name: Descompactar artefato para deployment
+      run: unzip python-app.zip
 
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3461974CA47B405380746FD1A8026FC5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BD9E8CC0C91247389595948A16169588 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A1F18FFCD61547B3B35140C57B53E7E5 }}
+    - name: Login no Azure
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+        tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+        subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
-        id: deploy-to-webapp
-        with:
-          app-name: 'TemCafee'
-          slot-name: 'Production'
+    - name: 'Deploy para Azure Web App'
+      uses: azure/webapps-deploy@v2
+      id: deploy-to-webapp
+      with:
+        app-name: 'TemCafee' # Nome da nova aplicação
+        slot-name: 'Production'
+        package: .
+
+    - name: Atualizar URL de Deploy
+      run: echo "Deploy realizado para a URL: https://temcafee.azurewebsites.net"
+
           
