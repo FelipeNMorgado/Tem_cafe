@@ -105,7 +105,11 @@
  <h3> Backlog do Jira </h3> 
   <img src="https://github.com/FelipeNMorgado/Tem_cafe/blob/main/Ctem_cafe/static/image-backlog.png">
 </div>
- 
+<div align="center">
+ <h3> BugTracker </h3> 
+  <img src="https://github.com/FelipeNMorgado/Tem_cafe/blob/main/Ctem_cafe/static/image-bugTracker-fechado.png">
+  <img src="https://github.com/FelipeNMorgado/Tem_cafe/blob/main/Ctem_cafe/static/image-bugTracker-aberto.png">
+ </div>
 </details>
 
 
