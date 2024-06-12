@@ -3,7 +3,7 @@
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
 name: Build and deploy Python app to Azure Web App - TemCafe
-                                                         
+
 on:
   push:
     branches:
@@ -11,81 +11,78 @@ on:
   workflow_dispatch:
 
 jobs:
-    build:
-      runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-        - name: Set up Python version
-          uses: actions/setup-python@v1
-          with:
-            python-version: '3.11'
+      - name: Set up Python version
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.11'
 
-        - name: Create and start virtual environment
-          run: |
-            python -m venv venv
-            source venv/bin/activate
-        
-        - name: Install dependencies
-          run: pip install python-dotenv
-              pip install psycopg2-binary
-              pip install gunicorn
-              pip install whitenoise
-              
-        
-        - name: Cleaning testing files
-          run: |
-            rm .env
-            
+      - name: Create and start virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+      
+      - name: Install dependencies from requirements.txt
+        run: |
+          pip install -r requirements.txt
+
+      - name: Cleaning testing files
+        run: |
+          rm .env
           
-        # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
-        - name: Zip artifact for deployment
-          run: |
-            cd tem_cafe/
-            zip release.zip ./* -r
-            cd ..
-            mv tem_cafe/release.zip .
+      - name: Zip artifact for deployment
+        run: |
+          cd tem_cafe/
+          zip release.zip ./* -r
+          cd ..
+          mv tem_cafe/release.zip .
 
-        - name: Upload artifact for deployment jobs
-          uses: actions/upload-artifact@v3
-          with:
-            name: python-app
-            path: |
-              release.zip
-              !venv/
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-app
+          path: |
+            release.zip
+            !venv/
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write # Isso é necessário para solicitar o JWT
 
-    deploy:
-        runs-on: ubuntu-latest
-        needs: build
-        permissions:
-          id-token: write # Isso é necessário para solicitar o JWT
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: python-app
 
-        steps:
-        - name: Download artifact from build job
-          uses: actions/download-artifact@v3
-          with:
-            name: python-app
-        
-        - name: Unzip artifact for deployment
-          run: unzip release.zip
-          
-        - name: Login no Azure
-          uses: azure/login@v1
-          with:
-            client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3461974CA47B405380746FD1A8026FC5 }}
-            tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BD9E8CC0C91247389595948A16169588 }}
-            subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A1F18FFCD61547B3B35140C57B53E7E5 }}
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
 
-        - name: 'Deploy para Azure Web App'
-          uses: azure/webapps-deploy@v2
-          id: deploy-to-webapp
-          with:
-            app-name: 'TemCafee' # Nome da nova aplicação
-            slot-name: 'Production'
+      - name: Login no Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3461974CA47B405380746FD1A8026FC5 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BD9E8CC0C91247389595948A16169588 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A1F18FFCD61547B3B35140C57B53E7E5 }}
 
-        - name: Atualizar URL de Deploy
-          run: echo "Deploy realizado para a URL: https://temcafee.azurewebsites.net"
-          
+      - name: 'Deploy para Azure Web App'
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: 'TemCafee' # Nome da nova aplicação
+          slot-name: 'Production'
+
+      - name: Atualizar URL de Deploy
+        run: |
+          echo "Deploy realizado para a URL: https://$APP_NAME.azurewebsites.net"
+        env:
+          APP_NAME: 'TemCafee'
