@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'visperfil2.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Notícias</title>
+</head>
+
+<style>
+
+body {
+    background: linear-gradient(180deg, #A6606D, #C49A7A);
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .navbar{
+    display: flex;
+    justify-content: left;
+    background-color: #A6606D;
+    box-shadow: 0px 0px 10px black;
+    margin-bottom: 10px;
+    padding: 2px;
+  }
+  #logo{
+
+max-width: 100px;
+max-height: 100px;
+width: 50%;
+height: 50%;
+} 
+  a{
+text-decoration: none;
+color: white;
+}
+  a:hover{
+color: black ;
+}
+.group-item{
+display: flex;
+justify-content: space-between;
+}
+.item{
+padding: 5px;
+}
+.perfil {
+align-self: flex-end;
+margin-left: auto; /* Força o alinhamento à direita */
+padding-right: 20px; /* Adiciona um espaço entre o ícone e o conteúdo */
+padding-bottom: 2px ;
+}
+.img-fluid img{
+  max-width: 300px;
+  height: auto;
+  width: 100%;
+  border-radius: 10px;
+}
+.news-conteiner{
+  background: linear-gradient(180deg, rgba(244, 244, 244, 0.5), rgba(255, 255, 255, 0.5));
+  border-radius: 10px;
+}
+
+
+</style>
+
+<body>
+  {% block content %}
+    <!-- ADICIONANDO BARRA DE NAVEGAÇÃO-->
+    <header>
+      <nav class="navbar">
+          <div class="logo">
+              <a href="{% url 'menu'%}"><img  id="logo"src="{% static 'LOGO NOVA 7.png'%}" alt="Logo"></a>
+          </div>
+          <div class="group-item ">
+            <div class="item">
+              <a href="{% url 'busca' %}">Buscar</a>
+            </div>
+            <div class="item">
+              <a href="{% url 'noticias'%}">Noticias</a>
+            </div>
+            <div class="item">
+              <a href="{% url 'cadastro_cafeteria' %}">Abra Seu Negocio</a>
+            </div>
+        </div>
+        <div class="perfil dropdown-header p-1">
+          <a href="{% url 'login' %}" class="m-2">Log Out</a>
+          <a href="{% url 'perfil_usuario' %}" id="imgDropdown" class="nav-icon pe-md-0" id="size">
+            Perfil
+            <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">                            
+          </a>
+        </div>
+      </nav>
+    </header>
+    
+     <div class="container">
+        <div class="content d-flex flex-column">
+          {%for noticia in noticias%}
+            <div class="news-conteiner m-3 col-12 d-flex">
+              <div class="img-fluid p-4">
+                <img src=" {{ noticia.arq }}" alt="{{ noticia.titulo}}">
+              </div>
+              <div class="container-text">
+                  <div class="title">
+                      <h1>{{noticia.titulo}}</h1>
+                  </div>
+                  <div class="description">
+                      <p>{{noticia.descricao}}</p>
+                  </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+     </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  {% endblock content %}
+</body>
+</html>

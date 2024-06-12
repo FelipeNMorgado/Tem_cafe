@@ -1,0 +1,280 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #A6606D, #C49A7A);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        
+        .navbar-brand img {
+            width: 100px;
+        }
+        .circle {
+            width: 150px;
+            height: 150px;
+            
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .circle img {
+            width: 100%;
+            height: auto;
+        }
+        .container {
+            text-align: center;
+        }
+        .col {
+            padding: 20px;
+        }
+        .cardapio img {
+            width: 100%;
+        }
+        .tag-item {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 5px 10px;
+            margin: 5px;
+            position: relative;
+        }
+        .tag-item h6 {
+            margin: 0;
+        }
+        .remove-tag-button {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+        }
+        .modal-content {
+            color: #333;
+        }
+        .modal-header, .modal-footer {
+            background-color: #f8f9fa;
+        }
+        .modal-body label {
+            color: #333;
+        }
+
+        .navbar{
+            display: flex;
+            justify-content: left;
+            background-color: #A6606D;
+            box-shadow: 0px 0px 10px black;
+            margin-bottom: 10px;
+            padding: 2px;
+          }
+          #logo{
+          
+            max-width: 100px;
+            max-height: 100px;
+            width: 50%;
+            height: 50%;
+          }
+          a{
+           text-decoration: none;
+            color: white;
+          }
+          a:hover{
+            color: black ;
+          }
+          .group-item{
+            display: flex;
+            justify-content: space-between;
+          }
+          .item{
+            padding: 5px;
+          }
+          
+          .perfil {
+            align-self: flex-end;
+            margin-left: auto; /* Força o alinhamento à direita */
+            padding-right: 20px; /* Adiciona um espaço entre o ícone e o conteúdo */
+            padding-bottom: 2px ;
+          }
+
+    </style>
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="{% url 'menu'%}"><img  id="logo"src="{% static 'LOGO NOVA 7.png'%}" alt="Logo"></a>
+            </div>
+            <div class="group-item ">
+              <div class="item">
+                <a href="{% url 'busca' %}">Buscar</a>
+              </div>
+              <div class="item">
+                <a href="{% url 'noticias'%}">Noticias</a>
+              </div>
+              <div class="item">
+                <a href="{% url 'cadastro_cafeteria'%}">Abra Seu Negocio</a>
+              </div>
+          </div>
+          <div class="perfil dropdown-header p-1">
+            <a href="{% url 'login' %}" class="m-2">Log Out</a>
+            <a href="{% url 'perfil_usuario' %}" id="imgDropdown" data-bs-toggle="dropdown" class="nav-icon pe-md-0" id="size">
+              Perfil
+              <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">                            
+            </a>
+          </div>
+        </nav>
+      </header>
+
+
+
+    <div class="container text-center fs-2">
+        <div class="row align-items-start">
+            <div class="col">
+                <p class="text-start te position-relative width:100px">Nome: {{ username }}</p>
+                <div class="circle">
+                    <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/7407996-user-icon-person-icon-client-symbol-login-head-sign-icon-design-vetor.jpg">
+                </div>
+                <br><br>
+                
+                <br><br>
+            </div>
+
+            <div class="col">
+                <p class="text-start fs-6">{{ user.historia }}</p>
+                <p class="text-start">Suas preferências de cafeterias:</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    {% for tag in user_tags %}
+                        <div class="tag-item" style="padding-right: 5%;">
+                            <h6>{{ tag.tag_name }}</h6>
+                            <button type="button" class="btn btn-danger btn-sm remove-tag-button" data-tag-id="{{ tag.id }}">X</button>
+                        </div>
+                    {% endfor %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Adicionar +
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                   
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Nova Tag:</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="col-md-4">
+                                      <label for="inputState" class="form-label fs-5">Opções:</label>
+                                      <select id="inputState" class="form-select" name="inputState">
+                                          <option selected>Escolha...</option>
+                                          <option>Trabalho</option>
+                                          <option>Estudo</option>
+                                          <option>Business</option>
+                                          <option>Pet Friendly</option>
+                                          <option>Café Arábica</option>
+                                          <option>Café Catuaí</option>
+                                          <option>Café Robusta</option>
+                                          <option>Café Geisha</option>
+                                          <option>Café Kona</option>
+                                      </select>
+                                      <button type="button" class="btn btn-primary mt-3" id="saveTagButton">Salvar</button>
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Adicione o token CSRF necessário para o Django -->
+                  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                  <script>
+                      document.getElementById('saveTagButton').addEventListener('click', function() {
+                          const selectedTag = document.getElementById('inputState').value;
+
+                          if (selectedTag === "Escolha...") {
+                              alert("Por favor, selecione uma tag.");
+                              return;
+                          }
+
+                          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                          fetch("{% url 'add_tag_usuario' %}", {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json',
+                                  'X-CSRFToken': csrfToken
+                              },
+                              body: JSON.stringify({
+                                  tag: selectedTag
+                              })
+                          })
+                          .then(response => response.json())
+                          .then(data => {
+                              if (data.success) {
+                                  alert("Tag adicionada com sucesso!");
+                                  location.reload(); // recarrega a página para mostrar a tag adicionada
+                              } else {
+                                  alert("Houve um erro ao adicionar a tag.");
+                              }
+                          });
+                      });
+
+                      document.querySelectorAll('.remove-tag-button').forEach(button => {
+                          button.addEventListener('click', function() {
+                              const tagId = this.getAttribute('data-tag-id');
+                              const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                              fetch("{% url 'remove_tag_usuario' %}", {
+                                  method: 'POST',
+                                  headers: {
+                                      'Content-Type': 'application/json',
+                                      'X-CSRFToken': csrfToken
+                                  },
+                                  body: JSON.stringify({ tag_id: tagId })
+                              })
+                              .then(response => response.json())
+                              .then(data => {
+                                  if (data.success) {
+                                      alert("Tag removida com sucesso!");
+                                      location.reload(); // recarrega a página para atualizar as tags
+                                  } else {
+                                      alert("Houve um erro ao remover a tag.");
+                                  }
+                              });
+                          });
+                      });
+                  </script>
+              </div>
+              <hr>
+              <p class="text-start">Cafeterias Favoritas</p>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                  {% for favorite in favorite_cafeterias %}
+                      <div class="tag-item position-relative">
+                          <h6>{{ favorite.cafeteria }}</h6>
+                      </div>
+                  {% endfor %}
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

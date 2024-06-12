@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-ek7T2y4A6M6DcLvB5T8GYs8pAtMFs82S5U2omrDteTxZk5KLQsqj2HIkg3HwrJ7N" crossorigin="anonymous">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt9hfwblf8bTiSSlbOygyjTH5d77NXSa0&callback=initMap&libraries=places"></script>
+    <title>Home</title>
+</head>
+
+<style>
+  body {
+    background: linear-gradient(180deg, #A6606D, #C49A7A);
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    overflow-x: hidden;
+    height: 100vh;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* Estilização do filtro */
+  .filter-container {
+    height: 635px;
+    margin-right: 20px; /* Ajuste para adicionar espaço à direita */
+    width: 100%; /* Largura total */
+  }
+
+  .filter-container ul {
+    padding-left: 0; /* Removendo o preenchimento padrão da lista */
+  }
+
+  .navbar{
+    display: flex;
+    justify-content: left;
+    background-color: #A6606D;
+    box-shadow: 0px 0px 10px black;
+    margin-bottom: 10px;
+    padding: 2px;
+  }
+
+  #logo{
+
+    max-width: 100px;
+    max-height: 100px;
+    width: 50%;
+    height: 50%;
+  }
+
+  a{
+   text-decoration: none;
+    color: white;
+  }
+  a:hover{
+    color: black ;
+  }
+
+  .group-item{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .item{
+    padding: 5px;
+  }
+
+  .perfil {
+    align-self: flex-end;
+    margin-left: auto; /* Força o alinhamento à direita */
+    padding-right: 20px; /* Adiciona um espaço entre o ícone e o conteúdo */
+    padding-bottom: 2px ;
+  }
+</style>
+
+{% block content %}
+
+<body>
+
+ <!-- BARRA DE NAVEGAÇÃO -->
+ <header>
+  <nav class="navbar">
+    {% if not user.is_staff %}
+      <div class="logo">
+          <a href="{% url 'menu' %}"><img id="logo" src="{% static 'LOGO NOVA 7.png' %}" alt="Logo"></a>
+      </div>
+    {%else%}
+      <div class="logo">
+        <a href="#"><img id="logo" src="{% static 'LOGO NOVA 7.png' %}" alt="Logo"></a>
+      </div>
+    {% endif %}
+      <div class="group-item">
+        <div class="item">
+          {% if not user.is_staff %}
+          <a href="{% url 'busca' %}">Buscar</a>
+          {% endif %}
+        </div>
+        <div class="item">
+          {% if not user.is_staff %}
+          <a href="{% url 'noticias' %}">Noticias</a>
+          {% endif %}
+        </div>
+        <div class="item">
+          <a href="{% url 'cadastro_cafeteria' %}">Abra Seu Negocio</a>
+        </div>
+      </div>
+      <div class="perfil dropdown-header">
+          <a href="{% url 'login' %}" class="m-2">Log Out</a>
+          {% if not user.is_staff %}
+              <a href="{% url 'perfil_usuario' %}" class="nav-icon pe-md-0">
+                  Perfil
+                  <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">
+              </a>
+          {% else %}
+              <img src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">
+          {% endif %}
+      </div>
+  </nav>
+</header>
+
+<div class="container mt-5" style="max-width: 60%">
+  <h1 class="text-center mb-4">Anunciando novidade</h1>
+  <div class="row justify-content-center">
+      <div class="col-lg-6">
+          <form class="row g-4" method="post">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="name" class="form-label">Titulo da noticia:</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descrição da noticia:</label>
+                <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+                <p class="font-weight-bold">Foto da noticia(URL)</p>
+                <input class="form-control" id="foto" name="foto" placeholder="Sua foto" rows="6">
+            </div>
+            <div class="mb-3 text-center">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+</body>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</html>

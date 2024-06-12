@@ -1,0 +1,256 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'menu.css' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Home</title>
+</head>
+
+<style>
+  body {
+    background: linear-gradient(180deg, #A6606D, #C49A7A);
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Estilização dos cards */
+  .card {
+    width: 20rem;
+    margin-bottom: 20px;
+  }
+
+  /* Estilização dos botões */
+  .btn {
+    background-color: #bf895a;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #a67649;
+    color: #fff5e6;
+}
+
+#recomendados{
+  color: black;
+}
+ 
+
+  /* Estilização do cabeçalho */
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  /* Estilização do conteúdo */
+  .content-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .search input[type="text"] {
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search button[type="submit"] {
+    background-color: #4e99e9;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+    transition: .9s ease;
+  }
+  
+  .search button[type="submit"]:hover {
+    transform: scale(1.1);
+    color: rgb(255, 255, 255);
+    background-color: blue;
+  }
+
+  hr.custom {
+    border: none;        /* Remove a borda padrão */
+    height: 3px;         /* Define a altura da linha */
+    background-color: white; /* Define a cor de fundo da linha */        
+    width: 75%;
+    margin-left: 15%;
+}
+
+.content-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.navbar{
+  display: flex;
+  justify-content: left;
+  background-color: #A6606D;
+  box-shadow: 0px 0px 10px black;
+  margin-bottom: 10px;
+  padding: 2px;
+}
+#logo{
+
+  max-width: 100px;
+  max-height: 100px;
+  width: 50%;
+  height: 50%;
+}
+a{
+ text-decoration: none;
+  color: white;
+}
+a:hover{
+  color: black ;
+}
+.group-item{
+  display: flex;
+  justify-content: space-between;
+}
+.item{
+  padding: 5px;
+}
+
+.perfil {
+  align-self: flex-end;
+  margin-left: auto; /* Força o alinhamento à direita */
+  padding-right: 20px; /* Adiciona um espaço entre o ícone e o conteúdo */
+  padding-bottom: 2px ;
+}
+
+</style>
+
+<body>
+
+ <!-- BARRA DE NAVEGAÇÃO -->
+ <header>
+  <nav class="navbar">
+      <div class="logo">
+          <a href="{% url 'menu'%}"><img  id="logo"src="{% static 'LOGO NOVA 7.png'%}" alt="Logo"></a>
+      </div>
+      <div class="group-item ">
+        <div class="item">
+          <a href="{% url 'busca' %}">Buscar</a>
+        </div>
+        <div class="item">
+          <a href="{% url 'noticias'%}">Noticias</a>
+        </div>
+        <div class="item">
+          <a href="{% url 'cadastro_cafeteria' %}">Abra Seu Negocio</a>
+        </div>
+    </div>
+    <div class="perfil dropdown-header p-1">
+      <a href="{% url 'login' %}" class="m-2">Log Out</a>
+      <a href="{% url 'perfil_usuario' %}" id="imgDropdown" data-bs-toggle="dropdown" class="nav-icon pe-md-0" id="size">
+        Perfil
+        <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">                            
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- FIM DA BARRA DE NAVEGAÇÃO-->
+
+
+
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Filtros
+  </a>
+
+  <ul class="dropdown-menu">
+    <form action="{% url 'busca' %}" method="GET">
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Trabalho"> Trabalho</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Estudo"> Estudo</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Business"> Business</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Pet Friendly"> Pet Friendly</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Arábica"> Café Arábica</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Catuaí"> Café Catuaí</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Robusta"> Café Robusta</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Gisha"> Café Gisha</label>
+      </li>
+      <li>
+        <label><input type="checkbox" name="filters[]" value="Café Kona"> Café Kona</label>
+      </li>
+  </ul>
+</div>
+
+  <div class="container">
+    <div class="row">
+      <!-- Filtro -->
+      <div class="search">
+            <input type="text" name="search" placeholder="Search..." >
+            <button type="submit">Go</button>
+        </form>
+    </div>
+
+      <br>
+      <br>
+      
+      <!-- Conteúdo das Cafeterias -->
+      <div class="col-md-12"> <!-- Ajustado para 12 colunas -->
+        <h1 class="header">Lista de Cafeterias</h1>
+        <hr class="custom">
+        <div class="content-container">
+          <!-- Chamando os filtros -->
+          <!-- Criando os cards das cafeterias -->
+          {% for coffeshop in cafeterias %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{coffeshop.nome_loja}}</h5>
+              <p class="card-text">Bairro: {{coffeshop.bairro}}</p>
+              <p class="card-text">Endereço: {{coffeshop.endereco|truncatechars_html:100}}</p>
+              <p class="card-text">Complemento: {{coffeshop.complemento}}</p>
+              <a href="{% url 'perfil' nome_cafeteria=coffeshop.nome_loja %}" class="btn">Read More</a>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-md-12 text-center">
+            <h2>Não há Cafeterias disponíveis</h2>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>

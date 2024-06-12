@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de cafeteria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- Adicionando Font Awesome -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #A6606D, #C49A7A);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input {
+            display: block;
+            width: 100%;
+            padding: 0.75rem; 
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+        }
+        .form-step{
+            padding: 5px;
+            display: none;
+        }
+        .form-step-activate {
+        display: block;
+        }
+        .form {
+            width: clamp(320px, 30%, 430px);
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 0.35rem;
+            padding: 1.5rem;
+            background-color: white;
+        }
+      
+        .ml-auto {
+            margin-left: auto;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        .form-control {
+            border: 0.1px solid #474747; /* Adicionando cor à borda */
+        }
+
+        .form-control::placeholder {
+            color: #474747; /* Alterando a cor do placeholder */
+        }
+
+        /* Estilo para diminuir o tamanho das barras e adicionar espaço entre elas */
+        .input-group > .col-md-6 {
+            margin-right: 5px; /* Espaço entre as barras */
+            flex: 0 0 auto; /* Impede que as barras cresçam */
+            width: calc(50% - 5px); /* Largura de 50% menos o espaço entre elas */
+        }
+
+        /* Estilo para o botão continuar */
+        .btn-continuar {
+            width: 90%; /* Largura do botão */
+            margin: 20px auto; /* Margem para centralizar verticalmente */
+            display: block; /* Tornar o botão um bloco para ocupar toda a largura */
+           
+        }
+        .btn{
+            background-color:#593F28;
+            border-color: #593F28;
+        }
+        .enviar{
+            display: flex;
+            justify-content: end;
+            margin: 5px;
+        }
+      .btn-prev{
+        margin-right: 10px ;
+      }
+      .btn:hover {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--primary-color);
+    }
+      .form-check-input[type="checkbox"] {
+        box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.3); /* Adicionando sombra */
+        padding: 4px;
+    }
+        .form-check-input[type="checkbox"]:not(:checked) {
+        border: 1px solid #ccc;
+    }
+    .form-check-label a {
+        text-decoration-color: black; /* Adicionando underlane preta */
+        color: inherit;
+    }
+    .progress-b  {
+        position: absolute;
+        top: 100px; /* Distância do topo */
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: space-between;
+        counter-reset: step;
+        margin-bottom: 50px; /* Aumenta a distância entre as bolas */
+    }
+
+
+    .progress-step {
+        width: 3.1875rem; /* Largura aumentada */
+        height: 3.1875rem; /* Altura aumentada */
+        border: 3px solid;
+        border-color: white;
+        border-radius: 50%;
+        margin-left: 100px;
+        margin-right: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .progress-step-activate{
+        color: black;
+        border: solid;
+        border-color: black;
+        
+    }
+    .progress-step::before{
+        counter-increment: step;
+        content: counter(step);
+        font-size: 35px;
+        z-index: -1;
+        color: white;
+    }
+
+    .progress-b::before , .progress{
+        content: "";
+        position: absolute;
+        top: 50%;
+        right:150px;
+        transform: translateY(-50%);
+        height: 4px;
+        width: 12.6rem;
+        background: white;
+        z-index: -1;
+    }
+    .progress{
+        background-color: var(--primary-color);
+        width: 0%;
+    }
+    .first-step::before {
+    color: black /* Defina a cor desejada para o primeiro círculo */
+}
+    .title{
+        position: relative; 
+        top: -10px;
+    }
+    .progress-step-completed{
+        background-color:black;
+        border: solid;
+        border-color:white;
+    }
+    .progress-step-activate::before {
+    color: black; /* Definir a cor do número como preto */
+}
+    .check-group{
+        margin: 5px;
+    }
+ 
+    .fas {
+        color: white;
+        margin-right: 17px;
+    }
+
+
+
+</style>
+
+</head>
+<body>
+    <div class="progress-b">
+        <div class="progress" id="progress"></div>
+        <div class="progress-step progress-step-activate first-step" data-title="personal_info"></div>
+        <div class="progress-step" data-title="login_info"></div> <!-- Adicionando o ícone de marca de verificação -->
+    </div>
+ <form class="row justify-content-center form" method="post">   
+       
+        <div class="form-step form-step-activate">
+            {% csrf_token %}
+            <div class="title">
+                <h1 style="font-size: 18px;"> Cadastre-se</h1>
+                <h2 style="font-size: 14px;">Informações Pessoais</h2>
+            </div>
+                <div class="input-group">
+                    <div class="col-12">
+                        <label for="inputFullName" class="form-label"></label>
+                        <input type="text" class="form-control form-control-sm" id="inputFullName" name="inputFullName" placeholder="Nome da Loja:" required>
+                    </div>
+                    <!--<div class="input-group">
+                        <div class="col-md-6">
+                            <label for="inputage4" class="form-label"></label>
+                            <input type="text" class="form-control form-control-sm" id="age4" name="age4" placeholder="Idade:" required>
+                        </div>
+                    
+                        <div class="col-md-6">
+                            <label for="inputgender4" class="form-label"></label>
+                             <select id="inputgender4" class="form-select" name="inputgender4" required>
+                                <option selected>Escolha...</option>
+                                <option>Masculino</option>
+                                <option>Feminino</option>
+                                <option>Prefiro não Informar</option>
+                            </select>
+                        </div>
+                    </div>
+                -->
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary btn-continuar">Continuar</button>
+                        </div>
+                    
+                    </div>
+            </div>
+                <div class="form-step">
+                    <div class="title">
+                        <h1 style="font-size: 18px;"> Cadastre-se</h1>
+                        <h2 style="font-size: 14px;">Informações de Login</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputEmail4" class="form-label"></label>
+                        <input type="email" class="form-control form-control-sm" id="inputEmail4" name="inputEmail4" placeholder="Email:" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputPassword4" class="form-label"></label>
+                        <input type="password" class="form-control form-control-sm" id="inputPassword4" name="inputPassword4" placeholder="Crie uma Senha:" required>
+                    </div>
+                    <!--<div class="col-md-12">
+                        <label for="inputPassword4" class="form-label"></label>
+                        <input type="password" class="form-control form-control-sm" id="inputPassword4" name="inputPassword4" placeholder="Confirme sua Senha:">
+                    </div> -->
+                    <div class="col-12 check-group">
+                        <input type="hidden" name="gridCheck" value="False">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck" name="gridCheck" value="True">
+                            <label class="form-check-label" for="gridCheck">
+                                Concordo com os <a href="#"> Termos de Uso </a> e <a href="#">Politica de Privacidade </a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 enviar">
+                        <button type="button" class="btn btn-primary btn-prev">Voltar</button>
+                        <button type="submit" class="btn btn-primary ">Confirmar</button>
+                    </div>
+                </div>
+    </form>
+    <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    const nextBtns = document.querySelectorAll(".btn-continuar");
+    const prevBtns = document.querySelectorAll(".btn-prev");
+    const progress = document.getElementById("progress");
+    const FormSteps = document.querySelectorAll(".form-step");
+    const progressSteps = document.querySelectorAll(".progress-step");
+
+    let formStepNum = 0;
+
+    nextBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            FormSteps[formStepNum].classList.remove("form-step-activate");
+            progressSteps[formStepNum].classList.add("progress-step-completed");
+
+            formStepNum++;
+            if (formStepNum >= FormSteps.length) {
+                formStepNum = FormSteps.length - 1;
+            }
+            progressSteps[formStepNum].classList.add("progress-step-activate");
+            FormSteps[formStepNum].classList.add("form-step-activate");
+
+            // Mova a marca de verificação para o próximo passo na barra de progresso
+            if (formStepNum === 1) {
+                progressSteps[0].innerHTML = '<div class="fas fa-check checkmark"></div>'; // Adiciona o ícone de checkmark
+            }
+        }); 
+});
+
+
+prevBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        progressSteps[formStepNum].classList.remove("progress-step-completed");
+        FormSteps[formStepNum].classList.remove("form-step-activate");
+        progressSteps[formStepNum].classList.remove("progress-step-activate");
+        formStepNum--;
+        if (formStepNum < 0) {
+            formStepNum = 0;
+        }
+
+        progressSteps[formStepNum].classList.add("progress-step-activate");
+        progressSteps[formStepNum].classList.remove("progress-step-completed");
+        FormSteps[formStepNum].classList.add("form-step-activate");
+
+        // Restaura o número no passo anterior na barra de progresso
+        if (formStepNum === 0) {
+                progressSteps[0].innerHTML = '<div></div>';
+            }
+    });
+});
+
+
+})
+
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1"></script>
+</body>
+</html>

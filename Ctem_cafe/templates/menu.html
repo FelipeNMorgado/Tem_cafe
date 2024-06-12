@@ -5,35 +5,101 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'menu.css' %}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-ek7T2y4A6M6DcLvB5T8GYs8pAtMFs82S5U2omrDteTxZk5KLQsqj2HIkg3HwrJ7N" crossorigin="anonymous">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt9hfwblf8bTiSSlbOygyjTH5d77NXSa0&callback=initMap&libraries=places"></script>
+    <script>
+      let map;
+      let infowindow;
+      let userMarker;
+      
+      function initMap() {
+        infowindow = new google.maps.InfoWindow();
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat:  -8.0476, lng: -34.8770 }, // Define um centro padrão para o mapa
+            zoom: 14,
+            styles: [
+                {
+                    featureType: 'poi',
+                    elementType: 'labels.icon',
+                    stylers: [{ visibility: 'off' }]
+                }
+            ]
+        });
+
+        const cafes = JSON.parse('{{ cafes_json|escapejs }}');
+        const geocoder = new google.maps.Geocoder();
+
+        cafes.forEach(cafe => {
+            const enderecoCompleto = `${cafe.fields.endereco}, ${cafe.fields.complemento}, ${cafe.fields.bairro}, ${cafe.fields.cidade}, ${cafe.fields.estado}, ${cafe.fields.cep}`;
+            geocoder.geocode({ 'address': enderecoCompleto }, function (results, status) {
+                if (status == 'OK') {
+                    const marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        title: cafe.fields.nome_loja,
+                        icon: {
+                            path: google.maps.SymbolPath.CROSS,
+                            scale: 10,
+                            fillColor: '#FF0000',
+                            fillOpacity: 1,
+                            strokeWeight: 1,
+                            strokeColor: '#FFFFFF'
+                        }
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        infowindow.setContent(`<div><strong>${cafe.fields.nome_loja}</strong><br>${enderecoCompleto}</div>`);
+                        infowindow.open(map, this);
+                    });
+                } else {
+                    console.log('Geocode falhou devido a: ' + status);
+                }
+            });
+        });
+    }
+
+    function handleLocationError(browserHasGeolocation, infowindow, userLocation) {
+        infowindow.setPosition(userLocation);
+        infowindow.setContent(browserHasGeolocation ?
+            'Erro: O serviço de geolocalização falhou.' :
+            'Erro: Seu navegador não suporta geolocalização.');
+        infowindow.open(map);
+    }
+</script>
+    </script>
+
     <title>Home</title>
 </head>
 
 <style>
   body {
-    background-color: #fdf9f1;
+    background: linear-gradient(180deg, #A6606D, #C49A7A);
     font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    overflow-x: hidden;
   }
 
   /* Estilização dos cards */
-  .card {
-    width: 20rem;
-    margin-bottom: 20px;
-  }
-
+  
   /* Estilização dos botões */
   .btn {
     background-color: #bf895a;
     color: white;
-  }
+}
 
-  /* Estilização do container principal */
-  .main-container {
-    padding-top: 20px;
-  }
+.btn:hover {
+    background-color: #a67649;
+    color: #fff5e6;
+}
+
+#recomendados{
+  color: black;
+}
+ 
 
   /* Estilização do cabeçalho */
   .header {
@@ -41,127 +107,290 @@
     margin-bottom: 20px;
   }
 
-  /* Estilização do filtro */
-  .filter-container {
-    height: 635px;
-    margin-right: 20px; /* Ajuste para adicionar espaço à direita */
-    width: 100%; /* Largura total */
-  }
-
-  /* Estilização da lista de filtros */
-  .filter-container ul {
-    padding-left: 0; /* Removendo o preenchimento padrão da lista */
-  }
-
-  /* Estilização dos itens da lista de filtros */
-  .filter-container ul li {
-    list-style: none; /* Removendo os marcadores de lista */
-  }
-
-  /* Estilização do campo de pesquisa */
-  .filter-container input {
-    width: 100%; /* Largura total */
-    margin-bottom: 10px; /* Espaço entre o campo de pesquisa e a lista de filtros */
-  }
-
-  /* Estilização do conteúdo */
-  .content-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  .main-content{
+    align-items: center;
     justify-content: center;
   }
+
+  .navbar{
+    display: flex;
+    justify-content: left;
+    background-color: #A6606D;
+    box-shadow: 0px 0px 10px black;
+    margin-bottom: 10px;
+    padding: 2px;
+  }
+  #logo{
+
+    max-width: 100px;
+    max-height: 100px;
+    width: 50%;
+    height: 50%;
+  }
+  a{
+   text-decoration: none;
+    color: white;
+  }
+  a:hover{
+    color: black ;
+  }
+  .group-item{
+    display: flex;
+    justify-content: space-between;
+  }
+  .item{
+    padding: 5px;
+  }
+  .perfil {
+    align-self: flex-end;
+    margin-left: auto; /* Força o alinhamento à direita */
+    padding-right: 20px; /* Adiciona um espaço entre o ícone e o conteúdo */
+    padding-bottom: 2px ;
+  }
+
+  /* Estilização das imagens no carrossel */
+ /* Estilização das imagens no carrossel */
+.carousel-item img {
+    border-radius: 20px;
+    margin: auto; /* Centraliza a imagem horizontalmente */
+    display: block; /* Faz a imagem ser exibida como bloco */
+}
+
+  .carrosel-text{
+    border-radius: 10px; ;
+    background-color: rgba(166, 96, 109, 0.5);
+    width: 30%;
+    position: relative;
+    right:-35% ;
+  }
+
+  .card-body {
+    min-height: 150px;
+    min-width: 150px;
+    height: 100%;
+    width: 100%;
+}
+.horizontal-overflow {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.container-fluid {
+    display: inline-block;
+}
+.card {
+    flex: 0 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(180deg, rgba(244, 244, 244, 0.5), rgba(255, 255, 255, 0.5));
+    color: black;
+}
+.circle-img img {
+    border-radius: 50%; /* Faça a imagem circular */
+    max-width: 100px; /* Defina um tamanho máximo para a imagem */
+    height: auto; /* Permita que a altura seja ajustada automaticamente para manter a proporção */
+  }
+  .card-alta {
+    flex: 0 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(180deg, rgba(244, 244, 244, 0.5), rgba(255, 255, 255, 0.5));
+    color: black;
+    max-width: 800px; /* Ajuste o tamanho conforme necessário */
+    width: 100%;
+    max-height: 500px;
+    height: 90%;
+    border-radius: 20px ;
+}
+
+.no-bg {
+    background-color: transparent !important; /* !important é usado para garantir que essa regra substitua qualquer outra regra de fundo */
+    border: none;
+}
+.bigger{
+  font-size: 25px ;
+}
+
+
 </style>
+
+{% block content %}
 
 <body>
 
  <!-- BARRA DE NAVEGAÇÃO -->
- <nav class="navbar navbar-expand-lg bg-body-tertiary mt-0">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img src="Logo.png" class="w-25 p-3"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" style="color: burlywood;" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color: burlywood;" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" style="color: burlywood;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true" >
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" style="background-color: burlywood;">
-              <li><a class="dropdown-item" style="color: #261B11;" href="#">Action </a></li>
-              <li><a class="dropdown-item"  style="color: #261B11;" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" style="color: #261B11;" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" style="color: burlywood;" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+<header>
+  <nav class="navbar">
+      <div class="logo">
+          <a href="{% url 'menu'%}"><img  id="logo"src="{% static 'LOGO NOVA 7.png'%}" alt="Logo"></a>
       </div>
+      <div class="group-item ">
+        <div class="item">
+          <a href="{% url 'busca' %}">Buscar</a>
+        </div>
+        <div class="item">
+          <a href="{% url 'noticias'%}">Noticias</a>
+        </div>
+        <div class="item">
+          <a href="{% url 'cadastro_cafeteria' %}">Abra Seu Negocio</a>
+        </div>
+    </div>
+    <div class="perfil dropdown-header p-1">
+      <a href="{% url 'login' %}" class="m-2">Log Out</a>
+      <a href="{% url 'perfil_usuario' %}" id="imgDropdown" class="nav-icon pe-md-0" id="size">
+        Perfil
+        <img class="dropbtn" src="https://cdn-icons-png.freepik.com/512/64/64572.png" height="40" style="max-width: none;">                            
+      </a>
     </div>
   </nav>
-<!-- FIM DA BARRA DE NAVEGAÇÃO-->
+</header>
 
-<div class="container main-container">
-  <div class="row">
-    <!-- Filtro -->
-   
-    <div class="col-md-3"> <!-- Ajustado para 3 colunas -->
-      <div class="filter-container">
-        <!-- Título dos Filtros -->
-        <h2>Filtros</h2>
-        
-        <!-- Campo de Pesquisa -->
-        <input type="text" placeholder="Pesquisar...">
-        
-        <!-- Lista de Filtros -->
-        <ul>
-          <li><a href="#">Tag 1</a></li>
-          <li><a href="#">Tag 2</a></li>
-          <li><a href="#">Tag 3</a></li>
-          <li><a href="#">Tag 4</a></li>
-        </ul>
-      </div>
+<div class="main-content"> 
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      {% for noticia in noticias %}
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %} aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+      {% endfor %}
     </div>
-
-    <!-- Conteúdo das Cafeterias -->
-    <div class="col-md-9"> <!-- Ajustado para 9 colunas -->
-      <h1 class="header">Cafeterias Próximas</h1>
-      <hr class="hr-small">
-      <div class="content-container">
-        <!-- Chamando os filtros -->
-        <!-- Criando os cards das cafeterias -->
-        {% for coffeshop in cafeterias %}
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{coffeshop.nome_loja}}</h5>
-            <p class="card-text">Bairro: {{coffeshop.bairro}}</p>
-            <p class="card-text">Endereço: {{coffeshop.endereco|truncatechars_html:100}}</p>
-            <p class="card-text">Complemento: {{coffeshop.complemento}}</p>
-            <a href="{% url 'perfil'%}" class="btn">Read More</a>
+    <div class="carousel-inner">
+      {% for noticia in noticias %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <img src="{{ noticia.arq }}" class="d-block w-100" alt="Imagem da notícia" style="max-width: 500px; max-height: 500px; width: 100%; height: 100%;">
+        <div class="carousel-caption d-none d-md-block">
+          <div class="carrosel-text">
+            <h5>{{ noticia.titulo }}</h5>
+            <p>{{ noticia.descricao }}</p>
           </div>
         </div>
-        {% empty %}
-        <div class="col-md-12 text-center">
-          <h2>Não há Cafeterias disponíveis</h2>
+      </div>
+      {% empty %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img src="https://cafegostobom.com.br/wp-content/uploads/2021/06/xicara-de-cafe.jpg" class="d-block w-100" alt="Imagem da notícia" style="max-width: 500px; max-height: 500px; width: 100%; height: 100%;">
+          <div class="carousel-caption d-none d-md-block">
+            <div class="carrosel-text">
+              <h5>SEM NOVIDADES POR ENQUANTO</h5>
+              <p>Nada de interessante aqui</p>
+            </div>
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  
+  <div class="grid m-3">
+    <h2 style="color: white; padding-left: 3%;">Meus Favoritos :</h2>
+    <div class="horizontal overflow-auto">
+      <div class="container-fluid py-2">
+        <div class="d-flex flex-row flex-nowrap overflow-auto">
+          <div class="card-group">
+            {% for item in favoritos_detalhes %}
+              <div class="card mr-4 d-flex justify-content-center align-items-center" style="border-radius: 20px ;"> <!-- Adicione classes para centralizar -->
+                <div class="card-body text-center"> <!-- Adicione a classe text-center para centralizar o texto -->
+                  <div class="circle-img mb-3"> <!-- Adicione a classe mb-3 para espaçamento inferior -->
+                    <img src="{{ item.cafeteria.arq }}" alt="{{ item.cafeteria.nome_loja }}" style="width: 100px; height: 100px;">
+                  </div>
+                  <h2 style="font-size: 20px;"><a href="{% url 'perfil' item.favorito.cafeteria %}" id="recomendados">{{ item.favorito.cafeteria }}</a></h2>
+                </div>
+              </div>
+            {% empty %}
+              <h3 style="color: white; text-align: center;">Favorite alguma cafeteria</h3> <!-- Adicione a classe text-align para centralizar o texto -->
+            {% endfor %}
+          </div>          
+        </div>
       </div>
     </div>
   </div>
+  
+  <div class="content-container-final d-flex justify-content-between col-md-12 grid m-3">
+    <div class="Recomend-content col-md-4" style="margin-right: -15px;"> <!-- Adicione margem negativa -->
+        <div class="Recomend">
+            <h2 style="color: white; padding-left: 9%;">Recomendados</h2> 
+        </div>
+        <div class="row">
+            <div class="col-dm-12 mb-4 mb-sm-2">
+              {% for recomendado in recommended_cafeterias %}
+                <div class="card-alta m-2" style="max-height: 150px;">
+                    <div class="card-body d-flex p-4">
+                        <div class="circle-img conteudo"> <!-- Adicionando a classe "conteudo" aqui -->
+                          <img src="{{ recomendado.arq }}" alt="{{ recomendado.nome_loja }}" style="width: 100px; height: 100px;">
+                        </div>
+                        <div class="body-conteuto d-flex flex-column p-3 ">
+                            <div>
+                                <div class="d-flex flex-column">
+                                    <h3 class="card-text"><a href="{% url 'perfil' recomendado.nome_loja %}" id="recomendados">{{ recomendado.nome_loja }}</a></h3>
+                                    <p>Avaliação: {{ recomendado.avg_nota }} ({{ recomendado.num_avaliacoes }} avaliações)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>     
+        </div>
+    </div>
+
+    <div id="map" class="col-md-4" style="height: 250px;width: 350px ; border-radius: 10px; margin-top:4.2%;"></div>
+    
+    <div class="Alta-content col-md-4" style="margin-right: 20px;"> <!-- Adicione margem negativa -->
+      
+        <div class="Alta">
+            <h2 style="color: white;">Cafeterias em Alta</h2>
+          {% for alta in media %} 
+            <div class="row">
+                <div class="col-12 mb-1 mb-sm-0">
+                    <div class="card-alta">
+                        <div class="card-body d-flex p-3">
+                            <div class="circle-img conteudo"> <!-- Adicionando a classe "conteudo" aqui -->
+                              <img src="{{ alta.arq }}" alt="{{ alta.nome_loja }}" style="width: 100px; height: 100px;">
+                            </div>
+                            <div class="body-conteuto d-flex flex-column p-3 ">
+                                <div>
+                                    <div class="d-flex">
+                                        <h3 class="card-text">{{ alta.nome_loja }}</h3>
+                                        <div class="favorite ml-4">
+                                            <form action="{% url 'favorited_coffeeshop' %}" method="POST" class="ui form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="post_id" value="{{ cafeteria.nome_loja }}">
+                                                {% if favorited %}
+                                                    <button type="submit" class="ui button positive no-bg"><span class="bigger">❤</span></button>
+                                                {% else %}
+                                                    <button type="submit" class="ui button negative no-bg"><span class="bigger">♡</span></button>
+                                                {% endif %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="conteudo"> <!-- Adicionando a classe "conteudo" aqui -->
+                                        <p> Endereço: {{ alta.endereco }}, {{ alta.complemento }} - {{  alta.bairro }}, {{ alta.cep }} </p>
+                                        <p> Avaliação: {{ alta.avg_nota }} ({{ alta.num_avaliacoes }} avaliações) </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+        </div>
+      {% endfor %}
+    </div>
 </div>
 
+  
+
+      </div>
+      
+</div>
+        
+        
+
+{% endblock %}
+
 </body>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>
