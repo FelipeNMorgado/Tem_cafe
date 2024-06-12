@@ -17,6 +17,9 @@ if NOT_PROD:
     DEBUG = True
     SECRET_KEY = 'django-insecure-7f(1fa6n@nq$^v$1pp8eqbyvxkl--t+-@b$d39j7-3cdc8'
     ALLOWED_HOSTS = ['temcafe.azurewebsites.net', '127.0.0.1']
+    CSRF_TRUSTED_ORIGINS = [
+        'https://temcafe.azurewebsites.net/'
+    ]
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
