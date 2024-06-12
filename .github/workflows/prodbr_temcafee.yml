@@ -90,7 +90,3 @@ deploy:
         slot-name: 'Production'
         package: .
 
-    - name: Atualizar URL de Deploy
-      run: echo "Deploy realizado para a URL: https://temcafee.azurewebsites.net"
-
-          
