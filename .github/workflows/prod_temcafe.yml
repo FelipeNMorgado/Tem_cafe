@@ -28,7 +28,11 @@ jobs:
           source venv/bin/activate
       
       - name: Install dependencies
-        run: pip install -r tem_cafe/requirements.txt
+        run: pip install python-dotenv
+             pip install psycopg2-binary
+             pip install gunicorn
+             pip install whitenoise
+             
       
       - name: Cleaning testing files
         run: |
