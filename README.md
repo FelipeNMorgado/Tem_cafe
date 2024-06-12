@@ -103,12 +103,12 @@
 
   ### Screencast do site na Azure:
   + <a href="https://youtu.be/rSJ2gUMObBE">Screencast do site na Azure</a>
+
+  ### Screencast do Lo-Fi:
+ + <a href ="https://youtu.be/1LIjJsXMPQY">Lo-Fi</a>
   
   ### Site na Azure:
  + <a href ="https://temcafe.azurewebsites.net">Site na Azure </a>
- 
-  ### Apresentação Lo-Fi:
- + <a href ="https://youtu.be/1LIjJsXMPQY">Lo-Fi</a>
 
 <div align="center">
   <h3> Quadro do Jira </h3> 
