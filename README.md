@@ -99,11 +99,11 @@
   + Link aqui...
 
   ### Screencast do CI/CD:
+  + <a href="https://www.youtube.com/watch?v=OOwdhgFefsE">Screencast do site na Azure</a>
   
-  + <a herf="https://www.youtube.com/watch?v=OOwdhgFefsE">Screencast do CI/CD</a>
 
   ### Screencast do site na Azure:
-  + <a href="https://youtu.be/rSJ2gUMObBE">Screencast do site na Azure</a>
+  + <a href="https://youtu.be/rSJ2gUMObBE">Screencast do CI/CD</a>
 
   ### Screencast do Lo-Fi:
  + <a href ="https://youtu.be/1LIjJsXMPQY">Lo-Fi</a>
