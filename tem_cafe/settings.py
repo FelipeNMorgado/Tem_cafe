@@ -13,20 +13,30 @@ TARGET_ENV = os.getenv('TARGET_ENV', 'development').lower()
 NOT_PROD = TARGET_ENV != 'production'
 
 if NOT_PROD:
-    # Development settings
-    DEBUG = True
-    SECRET_KEY = 'django-insecure-7f(1fa6n@nq$^v$1pp8eqbyvxkl--t+-@b$d39j7-3cdc8'
-    ALLOWED_HOSTS = ['temcafe.azurewebsites.net', '127.0.0.1']
+    # Production settings
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split()
     CSRF_TRUSTED_ORIGINS = [
         'https://temcafe.azurewebsites.net'
     ]
+    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
+
+    if SECURE_SSL_REDIRECT:
+        SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DBNAME'),
+            'HOST': os.getenv('DBHOST'),
+            'USER': os.getenv('DBUSER'),
+            'PASSWORD': os.getenv('DBPASS'),
+            'OPTIONS': {'sslmode': 'require'},
         }
     }
-else:  
+else: 
+     
     # Production settings
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
@@ -47,7 +57,6 @@ else:
             'OPTIONS': {'sslmode': 'require'},
         }
     }
-
 # Application definition
 INSTALLED_APPS = [
     'Ctem_cafe.apps.CtemCafeConfig',  # Ensure the app name is correct
