@@ -16,7 +16,7 @@ if NOT_PROD:
     # Development settings
     DEBUG = True
     SECRET_KEY = 'django-insecure-7f(1fa6n@nq$^v$1pp8eqbyvxkl--t+-@b$d39j7-3cdc8'
-    ALLOWED_HOSTS = ['temcafe.azurewebsites.net', '127.0.0.1']
+    ALLOWED_HOSTS = ['temcafee.azurewebsites.net', '127.0.0.1']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
