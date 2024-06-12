@@ -67,14 +67,6 @@ jobs:
       id-token: write # Isso é necessário para solicitar o JWT
 
     steps:
-      - name: Baixar artefato do job de build
-        uses: actions/download-artifact@v3
-        with:
-          name: python-app
-
-      - name: Descompactar artefato para deployment
-        run: unzip python-app.zip
-
       - name: Login no Azure
         uses: azure/login@v1
         with:
@@ -90,3 +82,7 @@ jobs:
           slot-name: 'Production'
           package: .
 
+      - name: Atualizar URL de Deploy
+        run: echo "Deploy realizado para a URL: https://temcafee.azurewebsites.net"
+
+          
