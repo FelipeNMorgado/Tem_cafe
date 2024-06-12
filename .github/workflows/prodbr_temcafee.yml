@@ -78,9 +78,9 @@ deploy:
     - name: Login no Azure
       uses: azure/login@v1
       with:
-        client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-        tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-        subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+        client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3461974CA47B405380746FD1A8026FC5 }}
+        tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BD9E8CC0C91247389595948A16169588 }}
+        subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A1F18FFCD61547B3B35140C57B53E7E5 }}
 
     - name: 'Deploy para Azure Web App'
       uses: azure/webapps-deploy@v2
