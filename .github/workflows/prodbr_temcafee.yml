@@ -55,6 +55,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    environment:
+      name: 'Production'
+      url: 'https://temcafee.azurewebsites.net'
     permissions:
       id-token: write # Isso é necessário para solicitar o JWT
 
@@ -79,10 +82,4 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'TemCafee' # Nome da nova aplicação
-          slot-name: 'Production'
-
-      - name: Atualizar URL de Deploy
-        run: |
-          echo "Deploy realizado para a URL: https://$APP_NAME.azurewebsites.net"
-        env:
-          APP_NAME: 'TemCafee'
+          slot-name: 'Production' # Nome do slot de produção
