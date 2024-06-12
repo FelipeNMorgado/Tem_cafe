@@ -45,7 +45,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -63,9 +63,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{secrets.AZUREAPPSERVICE_CLIENTID}}
-          tenant-id: ${{secrets.AZUREAPPSERVICE_TENANTID}}
-          subscription-id: ${{secrets.AZUREAPPSERVICE_SUBSCRIPTIONID}}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          enable-AzPSSession: false
+          environment: azurecloud
+          allow-no-subscriptions: false
+          audience: api://AzureADTokenExchange
+          auth-type: SERVICE_PRINCIPAL
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
